@@ -1,0 +1,115 @@
+\section{Visão dos clientes e comparativos}
+
+\subsection{Visão dos clientes}
+
+A fim de obter \textit{feedback} dos clientes quanto às atividades realizadas durante o desenvolvimento desse projeto,
+um questionário~(Apêndice~\ref{entrevista}) sobre visão inicial, processo e resultados foi elaborado.
+
+Quanto à visão no início do projeto, a Mari e o Hugo imaginavam um sistema que substituísse o que eles vinham usando atualmente, o \textit{XPlanner}. O foco para os dois era, portanto, oferecer uma solução com melhor usabilidade. Já o Guilherme, imaginava poder substituir o uso de cartões físicos e do quadro branco pelo \calopsita{} -- na Caelum, alguns projetos ocorrem com o time distribuído em suas unidades.
+
+Sobre o processo de desenvolvimento, a Mari e o Hugo gostaram bastante, de uma maneira geral. Algumas críticas foram feitas em relação à distância entre o time e os clientes nos momentos de programação e a dificuldade em saber o que estava pronto antes de o \calopsita{} começar a ser utilizado para o gerenciamento do projeto. Por outro lado, gostaram de poder gerenciar o \calopsita{} usando o próprio \calopsita{} assim que isso foi possível, de terem criado \textit{personas} para a criação de histórias e do \textit{deploy} automatizado, que permitia que eles acompanhassem o trabalho já executado em tempo real. 
+
+Por fim, na questão sobre os resultados obtidos, se mostraram extremamente satisfeitos -- mesmo reconhecendo que o sistema ainda tem muito a melhorar. Disseram que a adoção do \calopsita{} é bastante viável e que, em termos de usabilidade, já supera a ferramenta anterior, como enfatizado pelo Hugo na seguinte frase:
+
+\begin{quote}
+``A usabilidade é inquestionável, o \calopsita{} é um projeto que mostra \textbf{claramente} uns 15 anos de avanço em cima do \textit{XPlanner} do ponto de vista da usabilidade.''
+\end{quote}
+
+\subsection{Comparativo com outras ferramentas}
+
+Antes de iniciar o desenvolvimento do \calopsita{}, analisou-se outras alternativas de proposta semelhante disponíveis no mercado. Uma análise bem extensa foi feita, tanto de produtos pagos, quanto de gratuitos e \opensource{}. A intenção é descobrir quais os pontos fortes de cada ferramenta e implementá-los no \calopsita{}. 
+
+Embora as ferramentas pagas não sejam exatamente concorrentes, dado o grande investimento que é feito nelas, mostrar que o sistema desenvolvido tem as mesmas ou mais funcionalidades que as alternativas pagas pode fazer com que mais usuários e colaboradores sejam atraídos.
+
+\begin{itemize}
+\item{\textbf{Scrumy - https://scrumy.com/}
+
+É uma ferramenta paga e proprietária, com uma interface baseada em \textit{drag 'n' drop}. Não permite nenhum tipo de personalização, nem estimativas, marcação de horas, uso de \textit{templates} ou \textit{personas}. Quanto aos gráficos, o único disponibilizado é o \textit{burndown}. 
+
+Como diferencial, permite a visualização do projeto em algum ponto do passado, atualizando o kanban para representar o estado do projeto naquele ponto, além de permitir atualizações automáticas, ou seja, caso dois usuários estejam mexendo nele ao mesmo tempo, um enxerga as alterações do outro sem precisar recarregar a página.}
+
+\item{\textbf{ScrumNinja - http://scrumninja.com}
+
+É uma ferramenta paga e proprietária, bem pouco personalizável, sem a possibilidade de marcação de horas nem de trabalhar com \textit{templates} ou \textit{personas}. Tem suporte a estimativas, uma interface baseada em estados (start, deliver, etc) e gráficos de progresso. 
+
+Um diferencial está no fato de que possui uma API que pode ser utilizada para a atualização dos cartões.}
+
+\item{\textbf{Scrum'd - http://scrumd.com/}
+
+É uma ferramenta paga e proprietária, não personalizável, que permite a estimativa de histórias em pontos e de tarefas em horas. Faz uso de \textit{burndown} e não trabalha com \textit{templates} nem \textit{personas}. 
+
+Como diferencial, permite a importação e exportação de tarefas e histórias.}
+
+\item{\textbf{Pivotal Tracker - http://www.pivotaltracker.com/}
+
+É uma ferramenta proprietária, porém gratuita, que permite a estimativa de histórias em pontos e a marcação da velocidade do time. Também não trabalha com \textit{templates} nem \textit{personas}. 
+
+Como diferencial permite a importação e exportação de tarefas e histórias, assim como permite a classificação de uma história em \textit{bug/feature/chore/release}.}
+
+\item{\textbf{XPlanner - xplanner.org/}
+
+É uma ferramenta livre e \opensource{}, que vem sendo utilizada pela disciplina de Programação Extrema na USP. Ele tem muitas funcionalidades, no entanto sua interface de uso não é das mais agradáveis. O uso do XPlanner por todos do time foi também um fator motivador na criação do \calopsita{}. Esse sistema não é personalizável nem trabalha com \textit{templates} ou \textit{personas}.
+
+Quanto aos seus pontos positivos, o XPlanner permite o uso de estimativas e marcação de horas.}
+
+\item{\textbf{VersionOne - http://www.versionone.com}
+
+Ferramenta paga  e proprietária, personalizável e com suporte a marcação de velocidade, geração de \textit{burndown}. Não trabalha com \textit{templates} nem \textit{personas}.
+
+Tem como diferencial a possibilidade de planejamento de releases. É a única ferramenta analisada com suporte a diferentes metodologias.}
+
+\item{\textbf{Pronto - http://www.bluesoft.com.br/pronto-demo}
+
+Ferramenta \opensource{} e brasileira. Permite a marcação de horas trabalhadas, bem como a geração de gráficos (embora, durante os testes, a geração de \textit{burndowns} tenha apresentado problemas). Não permite customizações nem o uso de \textit{templates} ou \textit{personas}. 
+
+Como diferencial permite que usuários tenham perfis diferentes (\textit{product owner}, \textit{scrum master}, desenvolvedor, testador, etc) e permite informar se a tarefa for concluída usando pareamento, apontando a dupla envolvida.}
+
+\item{\textbf{PPTS - http://ses-ppts.sourceforge.net/}
+
+É uma ferramenta \opensource{} que possibilita a priorização de tarefas, bem como permite saber quais pessoas estiveram envolvidas em quais tarefas. Permite a geração de gráficos diversos, bem como a estimativa de tarefas e a geração de relatório com a velocidade do time. 
+
+Como diferencial, permite a customização de menus.}
+
+\item{\textbf{Rally - http://www.rallydev.com/}
+
+Ferramenta proprietária, que permite a customização por widgets e usuários com diferentes perfis. 
+
+Um diferencial está no fato de que permite integração com a IDE Eclipse.}
+
+\item{\textbf{Mingle - http://studios.thoughtworks.com/mingle-agile-project-management}
+
+Ferramenta proprietária que conta com a geração de gráficos, estimativas, priorização, marcação de horas. Permite uma certa customização, mas não permite o uso de \textit{templates} nem de \textit{personas}. 
+
+Como ponto positivo, está o fato de que se adapta a diferentes metodologias ágeis e possui integração com o \textit{Google Wave}.}
+
+\end{itemize}
+
+\subsection{Quadro comparativo}
+
+No quadro comparativo a seguir pode-se visualizar de maneira mais simples quais ferramentas têm e quais não têm algumas características levantadas como importantes para a equipe do \calopsita{}. 
+
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|}
+	\hline
+	\multicolumn{11}{|c|}{Aplicações similares} \\
+	\hline
+	                & A & B & C & D & E & F & G & H & I & J \\
+	Calopsita       & X & X & X & X & X & * & X & * & X & * \\
+	Scrumy          & - & - & - & X & X & - & - & - & - & - \\
+	ScrumNinja      & - & - & X & X & X & - & X & - & - & - \\
+	Scrum'd         & - & - & X & X & X & - & X & - & - & - \\
+	Pivotal Tracker & X & - & X & X & X & X & X & - & - & - \\
+	XPlanner        & X & X & - & X & X & X & X & - & - & - \\
+	VersionOne      & - & - & X & X & X & X & X & X & - & - \\
+	Pronto          & X & X & - & X & X & X & - & - & - & - \\
+	PPTS            & X & X & X & X & X & X & X & - & - & - \\
+	Rally           & - & - & X & X & X & X & X & - & - & - \\
+	Mingle          & - & - & X & X & X & X & X & X & - & - \\
+	\hline
+	\multicolumn{11}{l}{\textbf{Legenda:}} \\
+	\multicolumn{4}{l}{A - Gratuito} & \multicolumn{7}{l}{F - Marcação de horas} \\
+	\multicolumn{4}{l}{B - Opensource} & \multicolumn{7}{l}{G - Estimativas} \\
+	\multicolumn{4}{l}{C - Personalizável} & \multicolumn{7}{l}{H - \textit{Templates} de metodologias} \\
+	\multicolumn{4}{l}{D - Gráficos} & \multicolumn{7}{l}{I - \textit{Templates} de cartões} \\
+	\multicolumn{4}{l}{E - Priorização} & \multicolumn{7}{l}{J - \textit{Personas}} \\
+	\multicolumn{11}{l}{* - no \textit{backlog} para ser feito} \\
+\end{tabular}

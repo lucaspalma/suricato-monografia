@@ -1,0 +1,290 @@
+\section{Código}
+
+Todo o código do \calopsita{} está hospedado no GitHub, onde podem ser visualizados todo o histórico e atividades realizados no projeto desde sua concepção.
+
+Antes de iniciar o desenvolvimento do \calopsita{}, foi discutido quais seriam as escolhas de linguagens e \textit{frameworks} a serem utilizados. As opções se reduziram a duas: Ruby on Rails ou Java com VRaptor. Como a maioria da equipe tinha mais familiaridade com Java do que com Ruby, a escolha foi pelo Java com VRaptor. Durante o desenvolvimento foram usadas diversos conceitos e boas práticas de desenvolvimento de \software{}, como explicado a seguir.
+
+
+\subsection{DDD}
+
+A sigla DDD significa \textit{Domain Driven Design}~\cite{ddd}, ou seja, Projeto Orientado ao Domínio. A principal idéia por trás desse conceito é que os clientes e os desenvolvedores falem na mesma linguagem: a linguagem específica de domínio (DSL -- \textit{Domain Specific Language}).
+
+Na forma tradicional de desenvolvimento de software há dois lados claros e quase que opositores no que diz respeito às pessoas envolvidas: o lado do négocio, onde ficam os clientes e gerentes do projeto, e o lado técnico, onde ficam os arquitetos e desenvolvedores. Os clientes e gerentes tendem a conversar usando termos totalmente voltados à realidade de quem vai usar o \software{}, enquanto os arquitetos e desenvolvedores tendem a conversar usando termos técnicos. 
+
+O resultado disso é que os técnicos não entendem completamente os termos do negócio e clientes não entendem quase nada sobre os termos técnicos. Isso cria um impasse e um desconforto quando é necessário fazer uma reunião entre todos os envolvidos no projeto.
+
+Uma saída para resolver esse impasse é combinar uma linguagem ubíqua (\textit{Ubiquitous Language}), isto é, uma linguagem que todos os envolvidos no projeto conhecem. Dessa forma, clientes, usuários, gerentes, desenvolvedores e arquitetos usarão sempre os mesmos termos para descrever o sistema. Os especialistas no negócio devem definir e explicar os termos mais relevantes para os técnicos, que devem usá-los na arquitetura e no desenvolvimento do sistema. Da mesma forma, o pessoal técnico deve explicar os termos mais importantes da arquitetura do sistema para os especialistas no negócio.
+
+No \calopsita{} o domínio são métodos ágeis, então foram definidos os seguintes termos para a linguagem ubíqua:
+
+\begin{itemize}
+	\item{\textbf{Projeto (\textit{Project})} - um projeto gerenciado por uma equipe ágil;}
+	\item{\textbf{Iteração (\textit{Iteration})} - uma unidade de tempo que representa um ciclo iterativo do método ágil usado;}
+	\item{\textbf{Cartão (\textit{Card})} - uma unidade de trabalho, que pode ser uma funcionalidade, uma tarefa, uma história, ou qualquer unidade que represente o que precisa ser desenvolvido;}
+	\item{\textbf{\textit{Gadget}} - algo que adiciona informações ao cartão;}
+	\item{\textbf{\textit{Plugin}} - uma funcionalidade ou conjunto de funcionalidades que pode ser instalada no sistema.}
+\end{itemize}
+
+Toda a arquitetura do sistema se baseia nesses termos e na interação entre eles. Desse modo, a comunicação entre desenvolvedores e clientes acontece sem grandes problemas.
+
+\subsection{BDD e expressividade} 
+\label{bdd}
+
+BDD~\cite{bdd}, \textit{Behavior Driven Development}, é, não uma ferramenta, mas uma forma de pensar na sua aplicação. Segundo ela, pensa-se primeiro no comportamento esperado do \software{} e depois no código que será produzido. A recente adoção dessa forma de pensamento tem se mostrado bastante positiva na redução do acoplamento e na expressividade do código.
+
+Desde o começo, decidiu-se adotar boas práticas de desenvolvimento como o uso de \textit{Behavior Driven Development}, refatoração constante e programação em pares. Principalmente, para usar BDD, buscou-se ferramentas que ajudassem a escrever testes mais expressivos e legíveis. 
+
+No mundo do \textit{Ruby on Rails} essa prática já está bastante difundida e, portanto, existem várias ferramentas de teste como o RSpec~\footnote{http://rspec.info/} e o Cucumber~\footnote{http://cukes.info/} que implementam BDD. O dinamismo da linguagem ajuda, possibilitando a escrita de DSLs (\textit{Domain Specific Languages}) e interfaces fluentes~\cite{dsl} de uma maneira bastante direta. 
+
+Em Java, a tendência do uso de BDD ainda não é forte e não existem ferramentas avançadas. Além disso, Java é uma linguagem estática e burocrática, o que torna o desenvolvimento de tais ferramentas muito mais difícil. 
+
+Apesar das limitações impostas pela escolha da linguagem, as vantagens de usar BDD compensavam as dificuldades. Dessa forma, foram pesquisadas as seguintes alternativas:
+
+\begin{itemize}
+	\item{\textbf{JBehave}~\footnote{http://jbehave.org/} -- funciona associando um arquivo de texto a um código Java. No arquivo texto, fica a descrição da funcionalidade, tal como seria escrita num cartão de história;}
+	\item{\textbf{Cucumber $+$ JRuby}~\footnote{http://jruby.org/} -- tal qual a opção anterior, associa texto a código. Faz isso de uma forma mais eficiente e elegante do que o JBehave, mas é uma solução para Ruby. Precisa usar JRuby para integrar código Java aos testes;}
+	\item{\textbf{JUnit} -- a ferramenta padrão para testes automatizados em Java. Não tem nenhuma preparação para BDD, então seria apenas instrumental e se somaria à determinação da equipe por escrever testes legíveis e expressivos.}
+\end{itemize}
+
+O JBehave foi descartado por causa da sua sintaxe pouco produtiva, do uso extensivo de herança e de algumas limitações, como a impossibilidade de compartilhar passos (associações entre código Java e etapas da funcionalidade) entre casos de uso.
+
+Cucumber e JRuby foram descartados por causa da complexidade da integração e por causa da mistura de linguagens -- o \calopsita{} é um projeto \opensource{} e a mistura de linguagens poderia afastar eventuais colaboradores.
+
+A última opção foi escolhida por ser mais simples e permitir criar uma nova forma de desenvolver testes em Java. A solução para testes foi publicada no \textit{blog} da Caelum~\footnote{http://blog.caelum.com.br/2009/02/28/behavior-driven-development-com-junit/} e é uma arquitetura de testes que possibilita a escrita de testes de aceitação, em Java, quase em linguagem natural. 
+
+Inspirados no Cucumber, algumas convenções semânticas foram criadas para aumentar a legibilidade, de acordo com suas responsabilidades:
+
+\begin{itemize}
+	\item{\texttt{GivenContexts given} -- objeto que vai preparar o contexto inicial do teste em questão. Ex: Entrar em uma página, inserir determinados objetos no banco, logar-se com um dado usuário, etc;}
+	\item{\texttt{WhenActions when} -- objeto que vai executar as ações do teste em si, utilizando o contexto definido pelo objeto \texttt{given}. Ex: Preencher um formulário, clicar no botão Enviar, selecionar um item em alguma caixa de opções, etc;}
+	\item{\texttt{ThenAsserts then} -- objeto que verifica se o resultado das ações executadas é o esperado. É a parte mais importante do teste. Ex: O usuário está logado? Apareceu a mensagem ``Inserido com sucesso''? Deu erro de validação?}
+\end{itemize}
+
+Este é um exemplo de teste escrito nessa arquitetura, retirado do código do \calopsita{}:
+
+\begin{lstlisting}
+/**
+ * In order to plan what has to be done
+ * As a project client
+ * I want to create and edit cards (with name and description)
+ *
+ */
+public class CreateACardStory extends DefaultStory {
+
+	@Test
+	public void cardCreation() throws Exception {
+		given.thereIsAnUserNamed("David").and()
+			.thereIsAProjectNamed("Papyrus").ownedBy("David").and()
+			.iAmLoggedInAs("David");
+
+		when.iOpenProjectPageOf("Papyrus").and()
+		    .iOpenCardsPage().and()
+			.iAddTheCard("Incidents")
+				.withDescription("create and update an incident").and()
+			.iOpenCardsPage();
+		then.theCard("Incidents").appearsOnList();
+	}
+}
+\end{lstlisting}
+
+Repare que se os ruídos sintáticos pudessem ser removidos, o mesmo código seria lido com:
+
+\begin{verbatim}
+In order to plan what has to be done
+As a project client
+I want to create and edit cards (with name and description)
+
+Create a card story:
+
+card creation:
+	
+	given there is an user named "David" and
+		there is a project named "Papyrus" owned by "David" and
+		i am logged in as "David"
+
+	when I open project page of "Papyrus" and
+		I open cards page and
+		I add the card "Incidents" 
+			with description "create and update an incident" and
+		I open cards page
+			
+	then the card "Incidents" appears on list
+\end{verbatim}
+
+Isso é bastante próximo da linguagem natural, em inglês, e possibilita a leitura fácil até para leigos.
+
+Essa arquitetura de testes foi adotada apenas para testes de aceitação, que eram escritos a cada solicitação de funcionalidade. Para os testes unitários, a solução para aumentar a legibilidade foi  apenas usar refatoração, em especial a \textit{Extract Method}~\cite{refactoring}, para criar a mesma sensação, apesar de conter um pouco mais de ruídos sintáticos do Java. Um exemplo de teste unitário, retirado do código do \calopsita{}:
+
+\begin{lstlisting}
+public class IterationTest {
+	@Test
+	public void addingACardToAnIteration() throws Exception {
+		Iteration iteration = givenAnIteration();
+		Card card = givenACard();
+
+		shouldUpdateTheCard(card);
+
+		whenIAddTheCardToIteration(card, iteration);
+
+		assertThat(card.getIteration(), is(iteration));
+		mockery.assertIsSatisfied();
+	}
+}
+\end{lstlisting}
+
+Novamente, removendo a burocracia da linguagem de programação, obtemos o seguinte resultado.
+
+\begin{verbatim}
+Adding a card to an iteration
+	given an iteration
+	given a card
+
+	should update the card
+
+	when I add the card to iteration
+
+	assert that the card's iteration is the given iteration
+\end{verbatim}
+
+Dessa forma, a manutenção dos testes fica muito fácil e pode ser feita facilmente por qualquer pessoa, já que o teste deixa bem claro que está fazendo.
+
+\subsection{SeleniumDSL e testes de aceitação}
+
+No processo de desenvolvimento do \calopsita{}, foram criados testes de aceitação para cada funcionalidade requisitada pelos clientes do projeto. Esses testes são feitos a partir dos cartões escritos pelos clientes e são usados para validar se a funcionalidade está pronta. 
+
+Testes de aceitação simulam a interação do usuário com o sistema, executando passos como preencher formulários, clicar em botões, arrastar e soltar componentes. Esses testes de aceitação foram escritos em duas etapas: a primeira, em linguagem praticamente natural como visto na seção \ref{bdd}, e a infraestrutura para que essa primeira funcione corretamente, isto é, a implementação real das ações do teste.
+
+Para executar os testes, precisamos ter a aplicação rodando em um servidor e, então, simular a interação de um usuário com o sistema. Esta, pode ser simulada de duas formas:
+
+\begin{itemize}
+	\item{Abrindo um navegador, como o Firefox ou o Safari, e simulando as ações do usuário via javascript. A principal	ferramenta para isso é o Selenium~\footnote{http://seleniumhq.org/}. 
+
+Uma das vantagens dessa abordagem é que se pode acompanhar os passos do teste visualmente, facilitando a identificação de erros no teste. Entre as desvantagens, salta à vista a demora da execução dos testes, pois envolve a criação de novos e grandes processos no sistema operacional: o navegador precisa ser aberto e o Selenium requer uma instância de seu servidor rodando;}
+	\item{Criar as páginas da aplição em memória. A principal ferramenta para isso, em Java, é o HtmlUnit~\footnote{http://htmlunit.sourceforge.net/}. 
+
+Uma das vantagens é que, por fazer tudo em memória, a execução dos testes é bem mais rápida. Mas, exatamente por ser em memória, não é possível visualizar a execução do teste, o que torna a depuração mais complicada.}
+\end{itemize}
+
+O \calopsita{} começou usando o Selenium para os seus testes de aceitação. Mas a interface de uso do Selenium é difícil de utilizar e não é orientada a objetos: uma única interface com quase 150 métodos que contêm todas as ações existentes para uma página. Por causa disso, muitos projetos surgiram para tornar essa interface mais agradável de trabalhar. Um desses projetos é o SeleniumDSL~\footnote{http://github.com/caelum/selenium-dsl}, que é um projeto \opensource{} desenvolvido por pessoas da Caelum, inclusive os membros do \calopsita{}. O Selenium DSL é uma Fachada (\textit{Façade})~\cite{gof} que transforma a interface procedural numa interface fluente~\cite{dsl} e orientada a objetos.
+
+Para usar o Selenium, precisamos de um servidor Selenium rodando, que vai tratar as requisições dos testes, abrir navegadores e executar comandos. Isso causa certos problemas para configurá-lo em um processo de integração contínua~\cite{ci}, pois é preciso garantir que o servidor esteja rodando antes de executar os testes, e é necessário ter um servidor gráfico rodando para que os navegadores possam ser abertos. Por esse motivo, resolveu-se migrar os testes para o HtmlUnit, que não precisa de recursos externos para executar.
+
+Como a API SeleniumDSL é toda baseada em interfaces, foi criada, usando o \calopsita{} como base, uma implementação para HtmlUnit, transformando, dessa forma, o SeleniumDSL num Adaptador(\textit{Adapter})~\cite{gof}: não foi preciso mudar a implementação dos testes no \calopsita{}, tudo continuou funcionando quando a implementação do SeleniumDSL foi trocada. 
+
+Além disso, o SeleniumDSL permite trocar da implementação em Selenium para a em HtmlUnit mudando apenas uma linha de código. Por isso, criamos uma Fábrica(\textit{Factory})~\cite{gof} que decide qual das implementações do SeleniumDSL vai ser usada, fazendo com que aproveitássemos as vantagens das duas formas de criar testes para a web: usar o Selenium durante o desenvolvimento dos testes, para facilitar a depuração, e usar o HtmlUnit para rodar os testes no ambiente de integração contínua, para maior rapidez nos testes e simplicidade. Essa implementação de HtmlUnit para SeleniumDSL foi assunto de uma palestra num evento interno da Caelum~\footnote{http://www.youtube.com/watch?v=5oFlh\_Ka65U\&feature=related}.
+
+\subsection{REST}
+
+O termo REST (\textit{Representational State Transfer}) foi cunhado por Roy Thomas Fielding em sua tese de doutorado~\cite{rest-roy}, onde ele descreve as idéias que levaram à criação do protocolo HTTP.
+
+É um modelo arquitetural para sistemas distribuídos e a proposta central é que existe, no protocolo HTTP, um conjunto fixo de operações permitidas (verbos) e diversas aplicações que se comunicam aplicando este conjunto fixo de operações em recursos existentes. As aplicações podem, ainda, solicitar diversas representações destes recursos.
+
+A web é o maior exemplo de uso de uma arquitetura REST, onde os verbos são as operações disponíveis no protocolo (GET, POST, PUT, DELETE, HEADER, TRACE, OPTIONS), os recursos são identificados pelas URIs~\footnote{URI: Uniform Resource Identifier} e as representações podem ser definidas através de \textit{Mime Types}~\cite{mimetypes}.
+
+Ao desenhar aplicações REST, pensa-se nos recursos a serem disponibilizados pela aplicação e em seus formatos, em vez de pensar nas operações. Isso é facilmente reconhecido por URIs bastante expressivas. No \calopsita{}, as idéias de REST são utilizadas. Por exemplo, uma mesma URI de iteração (recurso) é capaz de adicionar, mostrar, atualizar e remover uma iteração.
+
+\begin{verbatim}
+ GET /projects/5/iterations => lista as iterações do projeto 
+                               de id 5
+ POST /projects/5/iterations => adiciona uma iteração ao 
+                                projeto de id 5
+ GET /projects/5/iterations/10 => visualiza a iteração de id 
+                                  10 do projeto de id 5
+ PUT /projects/5/iterations/10 => atualiza a iteração de id 
+                                  10 do projeto de id 5
+ DELETE /projects/5/iterations/10 => remove a iteração de id 
+                                     10 do projeto de id 5
+\end{verbatim}
+
+O recurso \texttt{/project/5/iterations} responde adicionando uma iteração quando é chamado via \texttt{POST} e listando todas as iterações quando chamado via \texttt{GET}. As outras operações, que poderiam ser acessadas por outros métodos HTTP, por exemplo, \texttt{DELETE} removendo todas as iterações do projeto e \texttt{PUT} substituindo a lista de iterações do projeto, não fazem sentido no contexto do \calopsita{}, então não foram implementadas.
+
+\subsection{VRaptor e Injeção de Dependências}
+
+Ao desenvolver aplicações web, tem-se duas escolhas: orientação a componentes ou a ações. Aplicações orientadas a componentes na Web costumam dar uma sensação de artificialidade. Isso porque a Web não possui suporte nativo a esse tipo de abordagem. Além disso, os \textit{frameworks} orientados a componente existentes em Java não possuem boa testabilidade e atrapalham a produtividade. 
+
+A decisão de desenvolver o \calopsita{} orientado a ações vem da propensão da arquitetura da web a lidar com ações curtas e pontuais. Dentre os \textit{frameworks} orientados a ações disponíveis para Java, o VRaptor~\footnote{http://vraptor.caelum.com.br} foi eleito, tanto pela maior familiaridade da equipe, quanto por esse \textit{framework} se mostrar mais produtivo e simples que os outros.
+
+Começamos a desenvolver o \calopsita{} com o VRaptor na versão 2.6, a mais atual na época. Paralelamente, a versão nova do VRaptor, a 3.0, começou a ser desenvolvida. Por volta de julho, já havia uma versão alfa funcional. Então, o \calopsita{} foi migrado para o VRaptor 3, já que ele trazia idéias melhores e boas práticas, muitas provenientes do \textit{Ruby on Rails}. 
+
+Além disso, vislumbrou-se a possibilidade de o \calopsita{} auxiliar no desenvolvimento do VRaptor 3, como pode ser visto no Apêndice~\ref{app:vraptor}. Ambos são projetos \opensource{} e possuem desenvolvedores em comum. Graças a relação entre os projetos, tanto o \calopsita{} quanto o VRaptor 3 amadureceram e cresceram.
+
+O VRaptor 3.0 possibilita o desenvolvimento de aplicações RESTful~\cite{rest} e o uso massivo de injeção de dependências~\cite{di}. O uso de uma interface web RESTful traz várias vantagens para uma aplicação web. Usando os verbos HTTP da forma recomendada na concepção do protocolo, pode-se aproveitar a semântica da web para uma aplicação. Além disso, o uso da arquitetura REST permite aproveitar recursos dos servidores, como caching. Também, a aplicação se torna automaticamente um \textit{web-service}, cada página representando um recurso, facilitando a integração com outros sistemas.
+
+Em julho, o \calopsita{} foi totalmente migrado para VRaptor 3, aumentando sensivelmente a produtividade no desenvolvimento. Nessa época, o VRaptor ainda não tinha uma versão estável, mas a maneira com o que ele foi feito possibilitava a fácil personalização e resolução dos problemas que existiam nele. A versão final só saiu no começo de outubro, mas entre julho e outubro o \calopsita{} auxiliou no desenvolvimento e teste das versões \textit{beta} do VRaptor 3.
+
+Usar injeção de dependências reduz grande parte dos códigos de infraestrutura e elimina a necessidade de instanciação de objetos em diversos métodos de uma mesma classe. Dessa forma, faz com que a aplicação fique naturalmente mais testável e com menor acoplamento. Isso, aliado a \textit{Factory Methods}~\cite{gof} e o uso de interfaces ao invés de implementações~\cite{effective}, fez com que as classes do \calopsita{} ficassem fáceis de testar unitariamente, possibilitando uma cobertura por testes de mais de 90\%.
+
+\subsection{\textit{ActiveRecord}}
+
+O padrão \textit{Active Record}~\cite{fowler} se tornou conhecido após o surgimento do Ruby on Rails~\footnote{http://rubyonrails.org}, que o usa para fazer a persistência dos dados. A idéia é que os próprios objetos sejam responsáveis por sua persistência, em vez de haver classes especializadas em salvar objetos do modelo no banco de dados. Essa segunda forma é denominada \textit{Data Mapper}~\cite{fowler}.
+
+Em Java, o padrão \textit{Data Mapper} é, de longe, o mais utilizado, já que há ótimas ferramentas de mapeamento objeto-relacional (ORM)~\cite{orm}, como o Hibernate, para auxiliar na questão da persistência. Faz parte da cultura da própria linguagem o uso extensivo do Hibernate~\footnote{http://hibernate.org} e de DAOs (\textit{Data Access Object})~\cite{dao}.
+
+Os DAOs são objetos que formam uma camada de abstração e tornam o acesso ao banco de dados mais simples e independente da forma de persistência dos dados. Parece bastante elegante, mas, usando esse padrão de projeto, é usual encontrar o seguinte exemplo de método, numa classe de acesso a dados:
+
+\begin{lstlisting}
+public List<Cartao> listaCartoesDoProjeto(Projeto projeto) {...}
+\end{lstlisting}
+
+Esse código não está orientado a objetos, embora receba e devolva objetos -- é uma classe procedural, que pode ser chamada de qualquer lugar e não tem relação direta com a classe de modelo \texttt{Projeto}. Esse mesmo código poderia ser escrito como:
+
+\begin{lstlisting}
+public class Projeto {
+	//...
+	List<Cartao> getCartoes() {...}
+}
+\end{lstlisting}
+
+Esse segundo exemplo é um trecho bem mais orientado a objetos -- é responsabilidade do projeto conhecer seus cartões, não de uma classe terceirizada. O Hibernate já possibilita esse tipo de código quando se tem relacionamentos de chave estrangeira configurados no modelo, através de \textit{Proxies}~\cite{gof}. No modo padrão de execução dessa biblioteca, ao fazer uma consulta ao banco de dados, os dados não são diretamente carregados. Apenas na primeira vez que um método do objeto carregado é acessado, seus dados são trazidos do banco. 
+
+Nem sempre, contudo, tem-se um relacionamento direto. Suponha, por exemplo, que é necessário obter apenas os cartões ativos. Nesse caso é preciso realizar uma consulta ao banco de dados, e para criar um método como \texttt{getCartoesAtivos} o banco de dados tem que estar acessível a partir do modelo e, assim, é necessário injetá-lo. Em Ruby, isso é possível através de \textit{mixins}~\footnote{http://www.rubycentral.com/pickaxe/tut\_modules.html}, que interpretam invocações a métodos que não existem no modelo e traduzem-nas para consultas ao banco de dados. Em Java, é obrigatório declarar explicitamente os métodos, logo não é possível usar a linguagem para interpretar métodos arbitrários.
+
+A saída foi adotar o padrão \textit{Repository} do livro Domain Driven Design~\cite{ddd} e usar injeção de dependências para que o modelo receba o seu respectivo repositório de dados. Desse modo, adicionam-se métodos que apenas delegam o trabalho para o repositório, a classe que vai fazer a consulta ao banco de fato.
+
+Injetar dependências em modelos não é uma tarefa trivial, porque objetos de modelos são criados várias vezes, em diversas condições diferentes. Algumas criações, por exemplo, são feitas pelo Hibernate quando ele efetua listagens. Outras vezes, esses modelos são criados a partir de parâmetros da requisição web.
+
+Quando o \textit{Active Record} começou a ser implementado no \calopsita{}, o VRaptor não suportava esse tipo de injeção de dependências, então o próprio \calopsita{} implementou essa injeção sobrescrevendo alguns componentes do VRaptor. Um pouco antes do VRaptor lançar sua versão final, contudo, surgiu um projeto \opensource{} chamado IOGI~\footnote{http://github.com/rafaeldff/iogi}, que permite criar objetos imutáveis a partir de parâmetros da requisição. Além disso, o IOGI possibilita a injeção de dependências, extinguindo a necessidade de fazer isso no \calopsita{} e diminuindo, novamente, a quantidade de código de infraestrutura existente.
+
+Desse modo, criamos modelos ricos, que encapsulam o seu acesso e representação no banco de dados. Assim os controladores das requisições web não precisam lidar com operações do banco de dados, eles apenas usam a interface do próprio modelo para fazer isso.
+
+\subsection{Arquitetura de plugins}
+
+Para facilitar a contribuição ao projeto, decidiu-se por adotar uma arquitetura de plugins no \calopsita{}. Desse modo existe um núcleo bem definido do sistema e os plugins definem pontos de extensão através dos quais podem adicionar informações e funcionalidades ao sistema.
+
+O núcleo consiste nas seguintes entidades básicas do sistema:
+
+\begin{itemize}
+	\item{\textbf{Card} - \textit{Cartões} - representam funcionalidades, etapas de desenvolvimento, tarefas, histórias de usuário etc. São a unidade básica das metodologias ágeis. Em ambientes físicos, são usualmente representados por cartões colados em quadros brancos;}
+	\item{\textbf{CardType} - \textit{Tipos de cartão} - adicionam ao cartão uma semântica. Com isso podemos dizer que um cartão \textbf{é uma} tarefa, uma história ou um épico, por exemplo. Com tipos de cartão também pode-se criar \textit{templates} que serão aplicados aos cartões desse tipo, por padrão;}
+	\item{\textbf{Iteration} - \textit{Iterações} - representa uma iteração, que é uma unidade de trabalho de metodologias ágeis. Iterações representam um ciclo de trabalho e entrega de funcionalidades;}
+	\item{\textbf{Project} - \textit{Projetos} - representa um projeto gerenciado pelo calopsita;}
+	\item{\textbf{User} - \textit{Usuários} - representa um usuário do sistema.}
+\end{itemize}
+
+Com essas entidades é possível controlar a parte central do sistema. Elas foram escolhidas de forma minimal por serem comuns a qualquer metodologia ágil. 
+
+Mas além delas, há a parte dos \textit{plugins}, que permitem desenvolver as funcionalidades específicas de cada metodologia ou adaptação de metodologia adotada pelo projeto. Os \textit{plugins} são classes que implementam uma interface dos pontos de extensão. Isto é, ao escrever essas classes, o comportamento do sistema é alterado adicionando uma funcionalidade ou simplesmente modificando listagens. Os pontos de extensão existentes são os seguintes:
+
+\begin{itemize}
+	\item{\textbf{Gadget} - Com ele você pode adicionar informações e comportamento aos cartões. Por exemplo adicionar tempo estimado de execução e data de início e finalização;}
+	\item{\textbf{PluginConfig} - Responsável por integrar o plugin ao sistema, adicionando \textit{links} aos menus;}
+	\item{\textbf{Transformer} - Responsável por modificar listagens, adicionando, removendo ou ordenando elementos.}
+\end{itemize}
+
+Além disso, se o \textit{plugin} precisar adicionar telas ao sistema, ele precisa implementá-las, usando o VRaptor3 para criar um controlador e as JSPs necessárias. Os pontos de extensão existentes ainda não possibilitam modificar telas já existentes, nem mudar formulários, por exemplo, mas podem ser implementados à medida em que forem necessários. Um pequeno manual sobre como criar um plugin pode ser visto no Apêndice~\ref{app:plugins}.
+
+\subsection{Cartões e subcartões}
+
+Cada cartão no \calopsita{} leva consigo tanto suas informações específicas, como descrição e criador, mas também uma lista de outros cartões. Se a arquitetura do \calopsita{} fosse fixa para tipos de cartões e determinasse que apenas haveriam as categorias ``História'', ``Tarefa'' e ``Bug'', certamente haveria aí uma implementação do padrão de projeto \textit{Composite}~\cite{gof}.
+
+Com a preferência pela flexibilidade, um cartão tem uma lista de cartões e uma lista de \textit{gadgets}. A presença ou ausência de \textit{gadgets} é que caracteriza cada tipo de cartão. Exemplificando, define-se o seguinte conjunto de \textit{gadgets} aos cartões:
+
+\begin{itemize}
+	\item{Histórias: têm \textit{gadgets} Priorizável, Planejável e Pontuável;}
+	\item{Tarefas: têm o \textit{gadget} de participação do Kanban;}
+	\item{\textit{Bugs}: têm \textit{gadgets} Priorizável e Planejável;}
+\end{itemize}
+
+Nesse exemplo, na tela de priorização, aparecerão apenas os cartões de Histórias e Bugs. Já no gráfico de \textit{Burn Down}, apenas as Histórias aparecem porque apenas elas contam pontos.
+
+Dessa forma, o \calopsita{} usa \textit{Composite} conceitualmente, apesar da implementação não estar estritamente de acordo com o proposto nos padrões de projeto. Os \textit{gadgets} somados a um cartão poder conter outros cartões, suprem o papel feito pelo polimorfismo daquela descrição e servem à resolução do mesmo problema. 
