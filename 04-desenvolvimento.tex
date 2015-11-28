@@ -1,0 +1,225 @@
+\section{Desenvolvimento}
+
+A partir dos resultados obtidos na pesquisa o próximo passo do trabalho foi  planejar e desenvolver um sistema com o objetivo de auxiliar os times ágeis nas suas reuniões de melhoria contínua.
+
+O levantamento dos requisitos foi feito em meados de agosto e a implementação da aplicação ocorreu de setembro até novembro. O código do projeto está em um repositório do GitHub~\footnote{https://github.com/mxball/suricato}.
+
+\subsection{Planejamento}
+
+O planejamento da aplicação ocorreu de meados de agosto até o começo de setembro. Como o objetivo da aplicação é ajudar qualquer tipo de equipe, seja local ou distribuído, uma das necessidades é que a aplicação seja acessível pelas máquinas de todos os integrante, independente de sistema operacional. Portanto a opção foi desenvolver uma aplicação web, já que o usuário consegue acessar o sistema através de qualquer navegador.
+
+\subsection{Requisitos do sistema}
+
+A próxima etapa do trabalho foi levantar quais seriam os requisitos do sistema web e usando como base os resultados da pesquisa sobre os desafios que times ágeis enfrentam com reuniões de melhoria contínua.
+
+A primeira coisa levada em consideração foi que a grande maioria dos times ainda fazem retrospectivas, com exceção dos times distribuídos em diversos fusos horários. A pesquisa mostrou que esses times ainda fazem reuniões parecidas com a retrospectiva, como, por exemplo, as conference calls. A única diferença é que elas não seguem uma estrutura como a retrospectiva, como a apresentada por Derby e Larsen~\cite{retrospectives}. Desta forma, decidiu-se basear os requisitos da aplicação na forma como a retrospectiva é feita localmente, mas a aplicação não exige que o time siga o fluxo predefinido pelas retrospectivas, como outras aplicações encontradas no mercado fazem, como, por exemplo, a retrium~\footnote{https://retrium.com/}.
+
+\subsubsection*{Lousa virtual}
+
+Em geral, a forma como as retrospectivas são feitas por times locais é utilizando um quadro branco, post-its e canetas. No começo da reunião o facilitador apresenta no quadro algum formato de retrospectiva, também conhecido como atividade. Depois de explicar a atividade para as pessoas, cada integrante pode colocar na lousa post-its, dando suas opiniões, apontando problemas no time, entre outros. A partir dos post-its o time consegue discutir e gerar ideias sobre como melhorar. Cada uma das ideias são escritas na lousa ou em post-its. Por fim, o time escolhe as melhores e define ações que o serão adotadas pela equipe para implementá-la. Essas ações também podem ser escritas na lousa ou em post-its.
+
+Portanto o primeiro requisito definido foi que o usuário da aplicação pode criar uma lousa virtual. Ele escolhe um formato de retrospectiva e o sistema gera uma tela como um quadro branco com a atividade escolhida desenhada no fundo.
+
+Depois de criar a lousa virtual, a próxima funcionalidade foi que o usuário poderia adicionar post-its. A tela daria algumas opções de post-its com diferentes cores e o integrante do time escreve algum texto no post-it depois de colocá-lo no quadro. Além da adição, outros dois requisitos definidos foram a remoção e edição.
+
+Para representar a parte de escrever as ideias e ações, a ideia do projeto é que o usuário também adicione comentários na lousa. Da mesma forma que o post-it, a pessoa também consegue remover e editar um comentário.
+
+\subsubsection*{Falta de engajamento e discussoes de pouco valor}
+
+Dois desafios muito citados pelos times que fazem a retrospectiva foram a falta de engajamento das pessoas e as discussões são de pouco valor. Poussard~\cite{poussard} aponta que um dos costumes que times ágeis tem é que muitos acabam criando hábitos nas retrospectivas e executando sempre os mesmos tipos de atividades. Ele defende que isso acaba enfraquecendo a evolução que poderia ser conquistada. Segundo Derby e Larsen~\cite{retrospectives},  as pessoas tendem a perder o interesse na retrospectiva quando estão fazendo sempre as mesmas atividades.
+
+Para investigar se os pontos levantados nesses artigos, na pesquisa havia uma pergunta para times que fazem retrospectiva se eles alternam os tipos das suas atividades e, caso sim, quais são as atividades. Depois de correlacionar essa resposta com a pergunta sobre os desafios que eles enfrentam com a reunião, a pesquisa foi inconclusiva já que os resultados para cada uma das dificuldades entre aqueles que variam e os que não variam foram muito próximos.
+
+Analisando as respostas é possível que os times variem as atividades, mas não os tipos de atividades. Das retrospectivas citadas pelos times que responderam sim, a maior parte delas eram do formato de encontrar problemas e discutir soluções. A hipótese é que muitos times ágeis ainda não conhecem diversos tipos de retrospectiva, como, por exemplo, as Futurespectives. Desta forma, eles alternam de atividade e não de tipo, como Pussard defende.
+
+Como a pesquisa não foi suficiente para contrapor os artigos, decidiu-se por planejar alguns requisitos que incentivam os usuários a variar seus tipos de atividades. Para isso, o sistema deveria conter uma listagem com os mais diversos formatos de atividades para o usuário escolher. A hipótese é que apresentando as diversas opções pode ajudar os times a conhecer novas retrospectivas e alternar entre os diversos tipos. Isso pode ajudar os times com seus problemas de falta de engajamento das pessoas e as discussões pouco produtivas.
+
+\subsubsection*{Tempo real}
+
+Como os times são formados por um conjunto de pessoas e como elas podem estar espalhados por diversas regiões, um dos principais requisitos definidos é que todos os integrantes devem mexer na mesma lousa virtual. As lousas foram planejadas  para funcionarem em tempo real para muitos usuários, ou seja, todos os usuários estão visualizando a mesma lousa e tudo que for alterado por alguma pessoa será mostrado no navegador dos outros integrantes.
+
+\subsubsection*{Dot votes}
+
+Outra dificuldade que foi muito citada na pesquisa é ultrapassar a duração da reunião. Uma das causas desse problema é que durante a coleta dos dados, como cada integrante vai adicionar os seus post-its, a quantidade de dados acaba sendo muito grande. Muitas equipes decidem discutir todos os pontos levantados e acabam estourando o tempo definido para a reunião.
+
+Na retrospectiva, uma das formas de reduzir o número de post-its que serão discutidos é encontrar quais são os pontos mais relevantes para se discutir. Para isso cada integrante vota nos pot-its que ele considera mais importantes e somente os mais votados serão discutidos na reunião. Essa forma de filtrar os dados é conhecida nas retrospectivas como dot votes.
+
+Por se tratar de uma técnica eficiente de diminuir o tempo da reunião e influenciar o time a debater o que é mais essencial, foi decidido que o sistema deve possibilitar essa votação. Mesmo sendo um recurso específico da retrospectiva, ele pode ajudar inclusive os times que realizam outras reuniões de melhoria contínua. Desta forma, o último requisito definido para a primeira versão do projeto é que o usuário pode dar up votes em um post-it. Cada um dos votos que o post-it recebe é marcado na tela, assim os integrantes podem indicar quais são os mais relevantes.
+
+\subsection{Trello}
+
+Para organizar os requisitos e todos os participantes do projeto saberem o que estava sendo implementado, um dos sistemas usados para gerenciar o trabalho foi o Trello. Para cada um dos requisitos são criados cartões que definem o que será implementado.
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=130mm]{images/requisitos.png}
+  }
+  \caption{Requisitos do sistema}\label{figura:requisitos}
+\end{figure}
+
+Cada um desses cartões segue os modelos de cartões de história da agilidade, em que são dadas três informações:
+
+\begin{itemize}
+	\item Para: a razão pela qual aquela funcionalidade será desenvolvida
+	\item Como: a persona que precisa da funcionalidade
+	\item Quero: o que o usuário quer que seja implementado
+\end{itemize}
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=130mm]{images/cartaoHistoria.png}
+  }
+  \caption{Modelo de cartão de história}\label{figura:cartao}
+\end{figure}
+
+\subsection{Tecnologias e criação do projeto}
+
+O desenvolvimento da aplicação começou em setembro após o levantamento dos requisitos. Devido a familiaridade dos idealizadores do trabalho, a linguagem escolhida foi o Java. Ainda houve uma discussão sobre que tecnologias utilizar para desenvolver o sistema.
+
+\subsubsection*{Framework MVC}
+
+Hoje em dia, uma das formas mais utilizadas no mercado para desenvolver aplicações web é através da arquitetura MVC (Model View Controller), na qual seu sistema é dividido em três partes:
+
+\begin{itemize}
+	\item Models: classes que representam as entidades do sistema (por exemplo, usuário e time) e as que te ajudam a armazenar e buscar os dados.
+	\item Views: responsável por apresentar os resultados na página web.
+	\item Controllers: responsável por processar as requisições, instanciar os modelos necessários para realizar a tarefa requisitada e chamar as views.
+\end{itemize}
+
+Existem diversos frameworks no mercado que seguem essa estrutura e o escolhido para desenvolver o TCC foi o Spring MVC.
+
+\subsubsection*{Autenticação e Autorização}
+
+Como um dos requisitos do sistema era que uma pessoa pode criar uma lousa virtual e todos os integrantes do seu time participam da reunião através da mesma lousa, uma das necessidades do sistema é que o usuário precisa se identificar através de um login (autenticação) e quando ele tentar acessar alguma tela o sistema precisa verificar se ele possui permissão (autorização).
+
+Já existem diversos frameworks no mercado que já abstraem as lógicas de autenticação e autorização, sendo necessário apenas informar qual o modelo de usuário usado pelo sistema. O framework escolhido foi o Spring Security devido a facilidade de integração com o Spring MVC.
+
+\subsubsection*{Banco de dados}
+
+Desde o início do projeto era óbvio que a aplicação precisaria de alguma banco para guardar os seus dados, como, por exemplo, os usuários, lousas virtuais, entre outros. A base de dados usada é o MySQL.
+
+O sistema ainda precisava se integrar com o banco para conseguir armazenar o seus dados. O sistema está escrito na linguagem Java, cujo paradigma é a Orientação a Objetos. Desta forma, todos os modelos são representados através de classes e objetos. No entanto, os bancos de dados como MySQL que seguem o paradigma Relacional, ou seja, tudo é guardado em tabelas. Por representarem os dados de formas completamente diferentes, existe uma barreira de comunicação entre a aplicação e o banco.
+
+Já existem diversos frameworks no mercado que já abstraem essa comunicação entre o aplicações orientadas a objetos e bancos relacionais, conhecidos como ORM (Object-relational Mapping). O mais utilizado é o Hibernate e foi a escolha para o projeto.
+
+\subsubsection*{Servidor de aplicação e WebSockets}
+
+Por se tratar de uma aplicação web, é essencial escolher em qual servidor rodará o sistema. Como um dos requisitos do sistema era que as lousas pudessem ser acessadas por vários usuários e as alterações deveriam ser em tempo real. Uma das formas conhecidas para fazer essa funcionalidade é usando o conceito de WebSockets. Ele é um protocolo de redes que estabelece como criar um canal de comunicação entre o navegador e o servidor.
+
+Através dos WebSockets, toda vez que um usuário acessar uma lousa virtual é criado um canal com o servidor, conhecido como socket. Através delel o navegador consegue enviar mensagens para o servidor informando todas as ações feitas pelo usuário, como adicionar um post-it, editar um comentário, entre outros. Quando o servidor receber essa mensagem ele consegue armazena no banco essa informação e a retransmite para todos os sockets que ele possui. Desta forma, cada integrante que está acessando a lousa virtual recebe a mensagem através do socket informando alguma alteração feita por outra pessoa e consegue reproduzí-la na sua tela.
+
+Essa ferramenta dos WebSockets ainda é recente e não são todos os servidores de aplicação que possuem suporte nativo para esse protocolo. Por isso o servidor escolhido foi o WildFly, desenvolvido pela RedHat, que já possui suporte para o WebSockets.
+
+\subsubsection*{Nascimento do Suricato}
+
+Uma das partes mais complicadas no começo de um grande projeto web é a integração entres os diversos frameworks que serão usados. Isso envolve muitas horas escrevendo diversos arquivos de configuração, em geral arquivos XML (Extensible Markup Language). Mesmo programadores com mais experiência levam longas horas até que todas as configurações fiquem corretas. 
+	
+No caso deste trabalho a integração seria entre os frameworks Spring MVC, Spring Security e Hibernate. Para não ocupar muito tempo com a configuração, o projeto foi gerado através do site Setup My Project~\footnote{http://www.setupmyproject.com/}. Ele permite que uma pessoa escolha quais tecnologias seu projeto usará e gera automaticamente uma versão simples de um sistema com todos os frameworks escolhidos já configurados.
+
+Criando o projeto no Setup My Project, bastou colocá-lo para rodar no servidor WildFly para ter um ambiente configurado e começar a implementar os requisitos do sistema em meados de setembro.
+
+Bastava dar um nome para o projeto. Devido uma antiga tradição no IME de que os projetos são do instituto recebem o nome de animais, a inspiração veio de procurar algum animal que saiba trabalhar bem em equipe. Assim o sistema do Suricato nasceu.
+
+\subsubsection*{Dificuldades de integração WildFly WebSockets e Spring MVC}
+
+Mesmo com o frameworks configurados, ainda faltava habilitar o WebSocket implementado pelo WildFly para funcionar com o Spring MVC, o que acabou gerando alguns problemas na hora de implementar o sistema para funcionar em tempo real.
+
+A classe criada no sistema responsável por criar e utilizar o WebSocket do lado do servidor é a RetrospectivaEndpoint. Para marcá-la como uma classe do WebSocket basta anotar a classe com um @ServerEndpoint e passar qual a url pela qual o canal de comunicação será criado.
+
+O problema aconteceu para conseguir armazenar as informações no banco de dados. Todos os códigos usados para comunicação com o banco foram isolados em classes que seguem o padrão de projeto DAO~\footnote{http://www.oracle.com/technetwork/java/dataaccessobject-138824.html}. Por trabalhar com o framework do Spring MVC, as classes DAO são anotadas com o @Repository. Com esta anotação, quem passa a gerenciar a classe -- cria objetos a partir dela e distribui esses objetos para outras classes que precisam usá-la -- é o Spring MVC. Esta forma de trabalhar do framework segue dois padrões de projeto, o Inversion of Control Containers e a Dependency Injection~\footnote{http://www.martinfowler.com/articles/injection.html}.
+
+Então o cenário do sistema é que havia a classe RetrospectivaEndpoint, gerenciada pelo servidor de aplicação WildFly. Esta classe precisava receber objetos DAO's para enviar as informações para o banco de dados, mas estes são gerenciados pelo framework Spring MVC. O problema é que as duas tecnologias não são capazes de enviar objetos que uma delas está gerenciando para a outra automaticamente.
+
+Mesmo pesquisando em blogs e fóruns se outras pessoas já passaram por esse problema de integração e como elas resolveram, nenhuma informação foi encontrada. Depois de algum tempo estudando mais a fundo as tecnologias e com a ajuda de pessoas da Caelum surgiu uma forma resolver este problema. O Spring MVC possui uma classe chamada de ApplicationContext, que possui objetos de todas as classes que ele gerencia, como os DAO's. Bastava criar a classe auxiliar ApplicationContextHolder, gerenciado pelo Spring e que possui um atributo estático que guarda um objeto de ApplicationContext. Por ser estático, qualquer outra classe do projeto pode acessá-lo, independente de qual tecnologia a gerencia. Assim, a classe RetrospectivaEndpoint consegue receber uma instância de ApplicationContext e, consequentemente, ao DAO.
+
+Esta solução para o problema de integrar o WebSockets do servidor de aplicação WildFly com o framework Spring MVC foi publicado no blog sobre Spring de um colega da Caelum~\footnote{https://domineospring.wordpress.com/2015/11/03/um-pouco-de-gambi-nao-faz-mal-a-ninguem-spring-em-ambientes-nao-gerenciados/}. 
+
+\subsection{Testes do software}
+
+Depois de um mês de desenvolvimento, o sistema já tinha as funcionalidades mínimos para que alguma pessoa pudesse usá-lo. Um usuário conseguia criar a lousa, escolher entre diversas atividades para a reunião e adicionar, remover ou editar um post-it ou comentário. Faltava adicionar a autenticação e autorização, deixar a lousa funcionando em tempo real e os dot votes.
+
+Como já era um sistema utilizável, os idealizadores do projeto começaram a usá-lo para fazer as retrospectivas do time em que trabalham. Com isso, diversos testes das funcionalidades foram feitos, o que permitiu encontrar alguns bugs e definir novas funcionalidades para o sistema.
+
+Dentre as novas funcionalidades definidas depois de realizar os testes, as principais foram:
+
+\begin{enumerate}
+	\item o usuário pode regular o tamanho de um comentário e o tamanho dos post-its é fixo.
+	\item comentários sempre aparecem por cima de um post-it.
+	\item no campo de texto que deve ser preenchido ao criar o post-it ou comentário, a tecla Enter insere o elemento na tela e o Shift + Enter pula uma linha.
+\end{enumerate}
+
+\subsubsection*{Layout}
+
+Em meados de novembro todas as funcionalidades já estavam implementados. No entanto, um dos pontos que mais discutidos durante os testes foi o layout do Suricato. Como os idealizadores do projeto ainda não possuem muita experiência na área de design e user experience, todas as telas do sistema continham pouco estilo e não eram muito agradáveis visualmente.
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=130mm]{images/login.png}
+  }
+  \caption{Tela antiga de login}\label{figura:loginAntigo}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=130mm]{images/index.png}
+  }
+  \caption{Tela antiga do usuário}\label{figura:indexAntigo}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=130mm]{images/criar.png}
+  }
+  \caption{Tela antiga de criar lousa virtual}\label{figura:criarAntigo}
+\end{figure}
+
+Antes liberar o sistema para ser usado pelos times era crucial arrumar o layout do sistema. Para isso foi necessário um auxílio de outras pessoas que trabalham na Caelum e tinham mais experiência e poderiam sugerir ideias de como melhorar as páginas do sistema. O designer Fabio Gushiken projetou o logo do sistema inspirado no seu nome. Já o designer Leonardo Guerra desenhou algumas atividades das retrospectivas, como a Speed Car e Hot Air Balloon.
+
+Para melhorar a experiência do usuário, os participantes fizeram uma reunião com o instrutor Marco Bruno, que dá aulas de UX e linguagens Front-End na Caelum. Durante a reunião foi explicado quais eram as funcionalidades do sistema e o estado atual das telas. A partir daí discutimos com o instrutor como remodelar o layout para deixá-lo mais agradável. O desenho do que foi planejado nessa reunião está abaixo.
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=130mm]{images/ux.jpg}
+  }
+  \caption{Modelagem das telas com UX}\label{figura:ux}
+\end{figure}
+
+Portanto, no fim do projeto o foco foi desenvolver as páginas seguindo os que foi planejado na reunião. Atualmente, as telas encontram-se da seguinte forma:
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=130mm]{images/login2.png}
+  }
+  \caption{Tela nova de login}\label{figura:loginNovo}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=130mm]{images/index2.png}
+  }
+  \caption{Tela nova do usuário}\label{figura:indexNovo}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \fbox{
+    \includegraphics[width=130mm]{images/criar2.png}
+  }
+  \caption{Tela nova de criar lousa virtual}\label{figura:criarNovo}
+\end{figure}
+
+\subsection{Hospedagem}
+
+Com a primeira versão do sistema pronta, faltava apenas hospedar o site. Como o servidor de aplicação era o WildFly da RedHat, a primeira opção foi usar o serviço da Openshift~\footnote{https://www.openshift.com/}, também da RedHat. Essa plataforma permite que qualquer pessoa hospede de graça sua aplicação web e possui máquinas preparadas para usar o WildFly. Por ser gratuito, o Openshift desliga a máquina quando ninguém está usando o sistema e liga quando um usuário tenta acessá-la. No entanto, para o Suricato as máquinas se mostraram muito instáveis, já que depois de ligá-la o sistema não era colocado no ar automaticamente. Alguém precisava se conectar via ssh na máquina e rodar comandos para que o projeto subisse.
+
+Devido a instabilidade da Openshift, tempos depois o sistema foi hospedado na Amazon Web Services~\footnote{https://aws.amazon.com/}. Mesmo levando alguns dias para criar a máquina e preparar o ambiente para rodar com o WildFly, o serviço é bem mais confiável e estável.
+
+Atualmente o domínio usado para acessar o projeto é http://suricatoagil.com/login.

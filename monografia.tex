@@ -10,6 +10,14 @@
 \usepackage{float}
 \usepackage{appendix}
 \usepackage{amsmath, amsthm, amssymb}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{geometry}
+\usepackage{changepage}
+\usepackage{lmodern}
+\usepackage{scrextend}
+\changefontsizes[14pt]{11pt}
+
 \hypersetup{colorlinks=true,%
 	citecolor=red,%
 	linkcolor=red,%
@@ -22,10 +30,10 @@
 
 \newcommand{\opensource}{\textit{open source}}
 \newcommand{\software}{\textit{software}}
-\newcommand{\calopsita}{Calopsita}
+\newcommand{\suricato}{Suricato}
 
-\title{\calopsita: Um sistema gerenciador de projetos que utilizam metodologias ágeis}
-\author{Cauê Haucke Porta Guerra\\Cecilia Fernandes\\Lucas Cavalcanti dos Santos\\ \\Orientador: Prof. Dr. Alfredo Goldman}
+\title{\suricato: Um sistema para facilitar reuniões de melhoria contínua}
+\author{Lucas Takeshi Rodrigues Palma\\Márcio Sakamoto Shibao\\ \\Orientador: Prof. Dr. Alfredo Goldman\\Co-orientadora: Cecilia Fernandes}
 
 \begin{document}
 	
@@ -44,33 +52,27 @@
 \newpage
 
 \begin{description} 
-\item{\textbf{Alunos:}\\Cauê Haucke Porta Guerra\\Cecilia Fernandes\\Lucas Cavalcanti dos Santos}
-\item{\textbf{Supervisor:}\\Prof. Dr. Alfredo Goldman}
-\item{\textbf{Colaboradores:}\\Mariana V. Bravo\\Hugo Corbucci\\Paulo E. de Azevedo Silveira\\Guilherme de Azevedo Silveira}
+\item{\textbf{Alunos:}\\Lucas Takeshi Rodrigues Palma\\Márcio Sakamoto Shibao}
+\item{\textbf{Supervisores:}\\Prof. Dr. Alfredo Goldman\\Cecilia Fernandes}
+\item{\textbf{Colaboradores:}\\Fabio Gushiken\\Leonardo Guerra\\Marco Bruno\\Mauricio Aniche\\Alberto Tavares}
 \end{description}
 
 \input{01-introducao}
 \newpage
 
-\input{02-motivacao}
+\input{02-melhoria-continua-retrospectiva}
 \newpage
 
-\input{03-desenvolvimento}
+\input{03-pesquisa}
 \newpage
 
-\input{04-codigo}
+\input{04-desenvolvimento}
 \newpage
 
-\input{05-funcionalidades}
+\input{05-conclusao}
 \newpage
 
-\input{06-comparativos}
-\newpage
-
-\input{07-conclusao}
-\newpage
-
-\input{08-bibliografia}
+\input{06-bibliografia}
 \newpage
 
 \renewcommand{\appendixname}{Apêndice}
@@ -84,15 +86,10 @@
 \renewcommand\thesection{\Roman{section}}
 
 
-\input{09-personas}
+\input{07-questoes-pesquisa}
 \newpage
 
-\input{10-entrevista-com-clientes}
+\input{08-respostas-pesquisa}
 \newpage
-
-\input{11-manual-plugins}
-\newpage
-
-\input{12-vraptor}
 
 \end{document}
