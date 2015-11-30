@@ -1,32 +1,30 @@
 \section{Melhoria Contínua e Retrospectiva}
 
-\begin{quote}
-\textit{``At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behavior accordingly.''}~\cite{manifesto}
-\end{quote}
+Com o passar do tempo, é comum que pessoas e times adotem certos padrões de como trabalhar juntos com menos atrito e de forma mais produtiva. No âmbito técnico, essa tendência se demonstra nas práticas de desenvolvimento utilizada. No pessoal, no formato da comunicação, sua frequência e do relacionamento entre as pessoas.
 
-Esta frase retrata um dos mais importantes princípios definidos no manifesto e uma das bases da agilidade, a melhoria contínua. 
-
-Com o passar do tempo, é comum que as pessoas e os times adotem padrões de como trabalhar, seja no ambito técnico de quais práticas de desenvolvimento utilizar ou no pessoal de como é a comunicação e o relacionamento entre as pessoas. Como diz Stephen Hawking:
+Como diz Aristóteles: 
 
 \begin{quote}
-\textit{``One of the basic rules of the universe is that nothing is perfect. Perfection simply doesn't exist. Without imperfection, neither you nor I would exist''}
+\textit{``Só fazemos melhor aquilo que repetidamente insistimos em melhorar. A busca da excelência não deve ser um objetivo, e sim um hábito.''}
 \end{quote}
 
-Ou seja, quando se trata de pessoas e projetos que estão em constante evolução, não existe uma forma perfeita de se trabalhar. Sempre há espaço para melhorias.
+Ou seja, sempre há espaço para melhorias. Assim, como não existe uma forma perfeita de se trabalhar, as pessoas e os projetos devem estar em uma constante evolução.
 
-Por isso da importância do princípio de melhoria contínua, já que é interessante que os times usem parte do seu tempo para pensar no que está dando certo ou errado, quais áreas precisam de aperfeiçoamento e que ações podem ser tomadas para levar o time a uma evolução. Equipes que conseguem fazer isso, a longo prazo, aumentam a qualidade do código, entregam mais valor para o cliente, criam um ambiente para o trabalho mais adequado, entre outros.
+No estudo de processos de desenvolvimento de projetos, outra literatura que trata melhoria contínua com grande seriedade é o \textit{Lean}: a filosofia por trás do modelo Toyota de produção~\cite{lean}. O conceito recebe o nome de \textit{Kaizen} e, em uma empresa que seguem as ideias do \textit{Lean}, todas as pessoas, independentemente de salário ou hierarquia, é responsável por pensar e agir para melhoria contínua do processo e do produto oferecido.
 
-A melhoria contínua é o conceito do que os time devem fazer, mas como eles fazem isso? Promover o princípio não é algo trivial e ao longo do tempo surgiram diversas práticas. A mais conhecida é a retrospectiva.
+Esses são apenas alguns demonstrativos da importância do princípio de melhoria contínua: é interessante que os times usem parte do seu tempo para pensar no que está dando certo ou errado, quais áreas precisam de aperfeiçoamento e que ações podem ser tomadas para levar o time a uma evolução. Equipes que conseguem fazer isso, a longo prazo, aumentam a qualidade do código, entregam mais valor para o cliente, criam um ambiente de trabalho melhor, entre outros benefícios.
 
-\subsection{Como funciona uma retrospectiva}
+Aplicar os conceitos de melhoria contínua no dia-a-dia, contudo, não e uma tarefa trivial. Há diversas práticas e técnicas que podem servir para esse propósito e, no contexto dos métodos ágeis, a ferramenta mais conhecida com esse objetivo é a retrospectiva.
 
-A retrospectiva pode ser um reunião complicada, dividida em uma série de etapas, e dado o tempo que ela leva, é comum as pessoas se perderem nos problemas. Assim, é interessante ter uma pessoa focada no andamento da reunião e não nos problemas. 
+\subsection{Estrutura e papéis em retrospectivas}
 
-Essa pessoa é chamada de facilitador. Sua função é manter o time focado, sem se perder durante as discussões e se alongar demais em alguns temas. Ele pode fazer isso, por exemplo, relembrando o assunto principal e tentando evitar discussões de pouco valor.
+Dependendo do contexto, uma retrospectiva pode se tornar uma reunião complexa, dividida em uma série de etapas e é comum que os participantes percam a visão do todo e se percam em algum problema. Assim, é interessante e muito comum que uma pessoa assuma um papel mais neutro, focando no andamento e nas atividades da reunião. Essa pessoa é chamada de \textbf{facilitador}.
 
-Durante a retrospectiva, o time deve ser capaz de identificar obstáculos e situações adversas. Esse é o momento para resolver os problemas, definir ações e encontrar responsáveis por fazer as mudanças acontecerem na equipe, dividindo assim a responsabilidade.
+Sua função é manter o time focado, sem desfocar durante discussões ou se alongar demais em temas pouco relevantes. Ele pode fazer isso, por exemplo, relembrando o assunto principal, delimitando tempos máximos para cada assunto e estruturando as atividades que comporão a reunião.
 
-Para organizar tudo isso, há diversos trabalhos a respeito de formatos para essa reunião, como citados por Caroli e Caetano no livro Fun Retrospectives~\cite{funRetrospectives}, ou por Kua em Retrospective Handbook~\cite{handRetrospectives}. A sugestão mais conhecida entre agilistas é, no entanto, o formato apresentado por Derby e Larsen no livro Agile Retrospectives~\cite{retrospectives}: 
+Durante a retrospectiva, o time deve ser capaz de identificar obstáculos e situações adversas. Esse é o momento para identificar problemas, definir ações e responsáveis por fazer cada ação ser cumprida e, 	assim, por fazer mudanças acontecerem na equipe, dividindo assim a responsabilidade.
+
+Para organizar tudo isso, há diversos trabalhos a respeito de formatos para essa reunião. A sugestão mais conhecida entre agilistas é o formato apresentado por Derby e Larsen~\cite{retrospectives} no livro Agile Retrospectives: 
 
 \begin{enumerate}
 	\item Preparar o terreno: 5\% do tempo.
@@ -36,7 +34,7 @@ Para organizar tudo isso, há diversos trabalhos a respeito de formatos para ess
 	\item Encerrar a retrospectiva: 10\% do tempo.
 \end{enumerate}
 
-Para realizar estas 5 etapas, o facilitador escolhe um modelo de retrospectiva para ser usado, conhecido como atividade. Livros como Fun Retrospectives~\cite{funRetrospectives} e Agile Retrospectives~\cite{retrospectives} apresentam catálogos com diversas atividades conhecidas e utilizadas por vários times ágeis para realizar cada uma das 5 etapas.
+Para realizar estas 5 etapas, o facilitador escolhe um modelo de retrospectiva para ser usado, conhecido como atividade. Existem muitos livros que catalogam diversas atividades conhecidas e utilizadas por vários times ágeis para realizar a reunião, como \textit{Fun Retrospectives}~\cite{funRetrospectives}, \textit{Retrospective Handbook}~\cite{handRetrospectives} e \textit{Agile Retrospectives}~\cite{retrospectives}.
 
 \subsubsection*{Preparar o terreno}
 
@@ -47,14 +45,16 @@ Além disso, esta etapa também é responsável por estabelecer o ambiente no qu
 \subsubsection*{Coletar os dados}
 
 Mesmo em iterações curtas de uma ou duas semanas, é muito difícil que todas as pessoas tenham visto e participado de tudo que aconteceu. Por isso, é importante que todos criem uma visão uniforme sobre o que aconteceu no projeto, caso contrário cada um baseará seus pensamentos apenas nas suas próprias opiniões e pontos de vista sobre a última iteração, tornando difícil estabelecer ações que todos se comprometerão. Desta forma, esta etapa busca estabelecer uma mesma imagem do que andou acontecendo para todos os membros. Para formar esta imagem será necessário coletar dados sobre a iteração.
-    
-Os primeiros dados coletados são os fatos, como eventos, métricas, funcionalidades, histórias terminadas e assim por diante. Mostrando visualmente estes dados, as pessoas podem encontrar padrões e fazer ligações entre os últimos acontecimentos. Depois, são coletados os sentimentos. Eles mostram o que é importante para cada um dos integrantes a respeito dos fatos e da equipe. 
+
+Existem dois tipos de dados a serem coletados. Os fatos, como eventos, métricas, funcionalidades, histórias terminadas e assim por diante. A análise destes pode ajudar as pessoas a encontrar padrões e fazer ligações entre os últimos acontecimentos. E os dados dos sentimentos, que mostram a importância, para cada um dos integrantes, a respeito dos fatos e da equipe. 
 
 Por fim, baseados nos fatos e sentimentos apresentados, são coletados os pontos fortes e fracos da equipe na iteração.
 
 \subsubsection*{Gerar ideias}
 
-Depois que um ambiente propício para discussões é estabelecido e todos estão olhando para os mesmo dados, é o momento de dar um passo pra trás para visualizar a imagem que foi gerada e pensar no que fazer. Então é nesta etapa em que as pessoas investigam quais foram os problemas enfrentados e os riscos que elas estão correndo. A partir destas discussões propõem diversas ideias sobre o que pode ser feito para que o time melhore.
+Depois que um ambiente propício para discussões é estabelecido e todos estão olhando para os mesmo dados, é o momento de dar um passo pra trás para visualizar a imagem que foi gerada e pensar no que fazer. 
+
+Esta é a etapa em que as pessoas investigam quais foram os problemas enfrentados e os riscos que elas estão correndo. A partir destas discussões propõem diversas ideias sobre o que pode ser feito para que o time melhore.
 
 \subsubsection*{Decidir o que fazer}
 
@@ -64,9 +64,8 @@ Após obter um conjunto de ideias, é o momento de listar quais são as melhores
 
 Além disso, é interessante delegar a alguém a responsabilidade por realizar a ação planejada -- quando ninguém fica como responsável é bem comum que a mudança não seja feita.
 
-
 \subsubsection*{Encerrar a retrospectiva}
 
 No decorrer da retrospectiva o time esteve, a todo momento, discutindo e tendo ideias. Com isto vem também um aprendizado para as pessoas sobre a equipe e o projeto. No entanto, nem todas as ideias que foram apresentadas serão utilizadas na próxima iteração.
 
-Além disso, o facilitador pode  buscar os pontos positivos e negativos da reunião promovendo, dessa forma, uma breve retrospectiva da retrospectiva. Assim, haverá feedback para que o facilitador melhore sua atuação e a escolha de atividades para a próxima vez.
+Além disso, o facilitador pode  buscar os pontos positivos e negativos da reunião promovendo, dessa forma, uma breve retrospectiva da retrospectiva. Assim, haverá \textit{feedback} para que o facilitador melhore sua atuação e a escolha de atividades para a próxima vez.
