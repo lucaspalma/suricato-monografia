@@ -18,7 +18,6 @@ lucas: subjetivas/lucas.tex
 	rm lucas.out -f
 
 shibao: subjetivas/shibao.tex
-	rm shibao.pdf
 	pdflatex subjetivas/shibao.tex
 	rm shibao.aux -f
 	rm shibao.log -f
