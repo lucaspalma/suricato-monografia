@@ -28,7 +28,7 @@ Para representar a parte de escrever as ideias e ações, a ideia do projeto é 
 
 Dois desafios muito citados pelos times que fazem a retrospectiva foram a falta de engajamento das pessoas e as discussões são de pouco valor. Poussard~\cite{poussard} aponta que um dos costumes que times ágeis tem é que muitos acabam criando hábitos nas retrospectivas e executando sempre os mesmos tipos de atividades. Ele defende que isso acaba enfraquecendo a evolução que poderia ser conquistada. Segundo Derby e Larsen~\cite{retrospectives},  as pessoas tendem a perder o interesse na retrospectiva quando estão fazendo sempre as mesmas atividades.
 
-Para investigar se os pontos levantados nesses artigos, na pesquisa havia uma pergunta para times que fazem retrospectiva se eles alternam os tipos das suas atividades e, caso sim, quais são as atividades. Depois de correlacionar essa resposta com a pergunta sobre os desafios que eles enfrentam com a reunião, a pesquisa foi inconclusiva já que os resultados para cada uma das dificuldades entre aqueles que variam e os que não variam foram muito próximos.
+Para investigar os pontos levantados nesses artigos, foi adicionada uma pergunta a ser respondida apenas por times que fazem retrospectivas sobre a  alternância de atividades nessa reunião e, em caso positivo, quais são as atividades mais utilizadas. Depois de correlacionar essa resposta com a pergunta sobre os desafios que eles enfrentam com a reunião, a pesquisa foi inconclusiva já que os resultados para cada uma das dificuldades entre aqueles que variam e os que não variam foram muito próximos.
 
 Analisando as respostas é possível que os times variem as atividades, mas não os tipos de atividades. Das retrospectivas citadas pelos times que responderam sim, a maior parte delas eram do formato de encontrar problemas e discutir soluções. A hipótese é que muitos times ágeis ainda não conhecem diversos tipos de retrospectiva, como, por exemplo, as \textit{Futurespectives}. Desta forma, eles alternam de atividade e não de tipo, como Pussard defende.
 
@@ -42,7 +42,7 @@ Como os times são formados por um conjunto de pessoas e como elas podem estar e
 
 Outra dificuldade que foi muito citada na pesquisa é ultrapassar a duração da reunião. Uma das causas desse problema é que durante a coleta dos dados, como cada integrante vai adicionar os seus post-its, a quantidade de dados acaba sendo muito grande. Muitas equipes decidem discutir todos os pontos levantados e acabam estourando o tempo definido para a reunião.
 
-Na retrospectiva, uma das formas de reduzir o número de post-its que serão discutidos é encontrar quais são os pontos mais relevantes para se discutir. Para isso cada integrante vota nos post-its que ele considera mais importantes e somente os mais votados serão discutidos na reunião. Essa forma de filtrar os dados é conhecida nas retrospectivas como \textit{dot votes}.
+Na retrospectiva, uma das formas de reduzir o número de post-its que serão discutidos é encontrar quais são os pontos mais relevantes para se discutir. Para isso cada integrante vota nos post-its que ele considera mais importantes e somente os mais votados serão discutidos na reunião. Essa forma de filtrar os dados é conhecida nas retrospectivas como \textit{dot voting}.
 
 Por se tratar de uma técnica eficiente de diminuir o tempo da reunião e influenciar o time a debater o que é mais essencial, foi decidido que o sistema deve possibilitar essa votação. Mesmo sendo um recurso específico da retrospectiva, ele pode ajudar inclusive os times que realizam outras reuniões de melhoria contínua. Desta forma, o último requisito definido para a primeira versão do projeto é que o usuário pode dar \textit{up votes} em um post-it. Cada um dos votos que o post-it recebe é marcado na tela, assim os integrantes podem indicar quais são os mais relevantes.
 
@@ -92,21 +92,21 @@ Existem diversos \textit{frameworks} no mercado que seguem essa estrutura e o es
 
 \subsubsection*{Autenticação e Autorização}
 
-Como um dos requisitos do sistema era que uma pessoa pode criar uma lousa virtual e todos os integrantes do seu time participam da reunião através da mesma lousa, uma das necessidades do sistema é que o usuário precisa se identificar através de um login (autenticação) e quando ele tentar acessar alguma tela o sistema precisa verificar se ele possui permissão (autorização).
+Como um dos requisitos do sistema era que uma pessoa pudesse criar uma lousa virtual e todos os integrantes do seu time participem da reunião através da mesma lousa, uma das necessidades do sistema é que o usuário se identifique através de um usuário (autenticação) e quando ele tentar acessar alguma tela o sistema precisa verificar se ele possui permissão (autorização).
 
-Já existem diversos \textit{frameworks} no mercado que já abstraem as lógicas de autenticação e autorização, sendo necessário apenas informar qual o modelo de usuário usado pelo sistema. O \textit{framework} escolhido foi o Spring Security devido a facilidade de integração com o Spring MVC.
+Já existem diversas bibliotecas no mercado que já abstraem as lógicas de autenticação e autorização, sendo necessário apenas informar qual o modelo de usuário usado pelo sistema. O \textit{framework} escolhido foi o Spring Security devido à facilidade de integração com o Spring MVC.
 
 \subsubsection*{Banco de dados}
 
 Desde o início do projeto era óbvio que a aplicação precisaria de alguma banco para guardar os seus dados, como, por exemplo, os usuários, lousas virtuais, entre outros. A base de dados usada é o MySQL.
 
-O sistema ainda precisava se integrar com o banco para conseguir armazenar o seus dados. O sistema está escrito na linguagem Java, cujo paradigma é a Orientação a Objetos. Desta forma, todos os modelos são representados através de classes e objetos. No entanto, os bancos de dados como MySQL que seguem o paradigma Relacional, ou seja, tudo é guardado em tabelas. Por representarem os dados de formas completamente diferentes, existe uma barreira de comunicação entre a aplicação e o banco.
+O sistema ainda precisava se integrar com o banco para conseguir armazenar o seus dados. O sistema está escrito na linguagem Java, cujo paradigma é a Orientação a Objetos e desta forma, todos os modelos são representados através de classes e objetos. No entanto, os bancos de dados como MySQL que seguem o paradigma Relacional, ou seja, tudo é guardado em tabelas. Por representarem os dados de formas completamente diferentes, existe uma barreira de comunicação entre a aplicação e o banco.
 
-Já existem diversos \textit{frameworks} no mercado que já abstraem essa comunicação entre o aplicações orientadas a objetos e bancos relacionais, conhecidos como ORM (\textit{Object-relational Mapping}). O mais utilizado é o Hibernate e foi a escolha para o projeto.
+Já existem diversos \textit{frameworks} no mercado que já abstraem essa comunicação entre as aplicações orientadas a objetos e bancos relacionais, conhecidos como ORM (\textit{Object-relational Mapping}). O mais utilizado é o Hibernate e foi a escolha para o projeto.
 
 \subsubsection*{Servidor de aplicação e WebSockets}
 
-Por se tratar de uma aplicação web, é essencial escolher em qual servidor rodará o sistema. Como um dos requisitos do sistema era que as lousas pudessem ser acessadas por vários usuários e as alterações deveriam ser em tempo real. Uma das formas conhecidas para fazer essa funcionalidade é usando o conceito de WebSockets. Ele é um protocolo de redes que estabelece como criar um canal de comunicação entre o navegador e o servidor.
+Por se tratar de uma aplicação web, é essencial escolher em qual servidor rodará o sistema pois um dos requisitos do mesmo é possuir lousas pudessem ser acessadas por vários usuários e as alterações deveriam ser em tempo real. Uma das formas conhecidas para fazer essa funcionalidade é usar o conceito de WebSockets que é um protocolo de redes que estabelece como criar um canal de comunicação entre o navegador e o servidor.
 
 Através dos WebSockets, toda vez que um usuário acessar uma lousa virtual é criado um canal com o servidor, conhecido como socket. Através dele o navegador consegue enviar mensagens para o servidor informando todas as ações feitas pelo usuário, como adicionar um post-it, editar um comentário, entre outros. Quando o servidor receber essa mensagem ele consegue armazena no banco essa informação e a retransmite para todos os sockets que ele possui. Desta forma, cada integrante que está acessando a lousa virtual recebe a mensagem através do socket informando alguma alteração feita por outra pessoa e consegue reproduzi-la na sua tela.
 
@@ -120,7 +120,7 @@ No caso deste trabalho a integração seria entre os \textit{frameworks} Spring 
 
 Criando o projeto no Setup My Project, bastou colocá-lo para rodar no servidor WildFly para ter um ambiente configurado e começar a implementar os requisitos do sistema em meados de setembro.
 
-Bastava dar um nome para o projeto. Devido uma antiga tradição no IME de que os projetos são do instituto recebem o nome de animais, a inspiração veio de procurar algum animal que saiba trabalhar bem em equipe. Assim o sistema do Suricato nasceu.
+Bastava dar um nome para o projeto. Devido uma antiga tradição no IME de que os projetos são do instituto recebem o nome de animais, a inspiração veio em procurar algum animal que saiba trabalhar bem em equipe. Assim o sistema do Suricato nasceu.
 
 \subsubsection*{Dificuldades de integração WildFly WebSockets e Spring MVC}
 
@@ -130,15 +130,15 @@ A classe criada no sistema responsável por criar e utilizar o WebSocket do lado
 
 O problema aconteceu para conseguir armazenar as informações no banco de dados. Todos os códigos usados para comunicação com o banco foram isolados em classes que seguem o padrão de projeto DAO~\footnote{http://www.oracle.com/technetwork/java/dataaccessobject-138824.html}. Por trabalhar com o Spring MVC, as classes DAO são anotadas com o @Repository. Com esta anotação, quem passa a gerenciar a classe -- cria objetos a partir dela e distribui esses objetos para outras classes que precisam usá-la -- é o Spring MVC. Esta forma de trabalhar do \textit{framework} segue dois padrões de projeto, o Inversion of Control Containers e a Dependency Injection~\footnote{http://www.martinfowler.com/articles/injection.html}.
 
-Então o cenário do sistema é que havia a classe RetrospectivaEndpoint, gerenciada pelo servidor de aplicação WildFly. Esta classe precisava receber objetos DAO's para enviar as informações para o banco de dados, mas estes são gerenciados pelo Spring MVC. O problema é que as duas tecnologias não são capazes de enviar objetos que uma delas está gerenciando para a outra automaticamente.
+Então o cenário do sistema é que havia a classe RetrospectivaEndpoint, gerenciada pelo servidor de aplicação WildFly. Esta classe precisava receber objetos DAO's para enviar as informações para o banco de dados, mas estes são gerenciados pelo Spring MVC. O problema é que as duas tecnologias não são capazes de enviar objetos em que uma delas está gerenciando a outra automaticamente.
 
-Mesmo pesquisando em blogs e fóruns se outras pessoas já passaram por esse problema de integração e como elas resolveram, nenhuma informação foi encontrada. Depois de algum tempo estudando mais a fundo as tecnologias e com a ajuda de pessoas da Caelum surgiu uma forma resolver este problema. O Spring MVC possui uma classe chamada de ApplicationContext, que possui objetos de todas as classes que ele gerencia, como os DAO's. Bastava criar a classe auxiliar ApplicationContextHolder, gerenciado pelo Spring e que possui um atributo estático que guarda um objeto de ApplicationContext. Por ser estático, qualquer outra classe do projeto pode acessá-lo, independente de qual tecnologia a gerencia. Assim, a classe RetrospectivaEndpoint consegue receber uma instância de ApplicationContext e, consequentemente, ao DAO.
+Mesmo pesquisando em blogs e fóruns se existiam outras pessoas que já passaram por esse problema de integração e como elas resolveram, nenhuma informação foi encontrada. Depois de algum tempo estudando mais a fundo as tecnologias e com a ajuda de pessoas da Caelum surgiu uma forma resolver este problema. O Spring MVC possui uma classe chamada de ApplicationContext, que possui objetos de todas as classes que ele gerencia, como os DAO's. Bastava criar a classe auxiliar ApplicationContextHolder, gerenciado pelo Spring e que possui um atributo estático que guarda um objeto de ApplicationContext. Por ser estático, qualquer outra classe do projeto pode acessá-lo, independente de qual tecnologia a gerencia. Assim, a classe RetrospectivaEndpoint consegue receber uma instância de ApplicationContext e, consequentemente, ao DAO.
 
 Esta solução para o problema de integrar o WebSockets do servidor de aplicação WildFly com o \textit{framework} Spring MVC foi publicado no blog sobre Spring de um colega da Caelum~\footnote{https://domineospring.wordpress.com/2015/11/03/um-pouco-de-gambi-nao-faz-mal-a-ninguem-spring-em-ambientes-nao-gerenciados/}. 
 
 \subsection{Testes do software}
 
-Depois de um mês de desenvolvimento, o sistema já tinha as funcionalidades mínimos para que alguma pessoa pudesse usá-lo. Um usuário conseguia criar a lousa, escolher entre diversas atividades para a reunião e adicionar, remover ou editar um post-it ou comentário. Faltava adicionar a autenticação e autorização, deixar a lousa funcionando em tempo real e os dot votes.
+Depois de um mês de desenvolvimento, o sistema já tinha as funcionalidades mínimos para que alguma pessoa pudesse usá-lo. Um usuário conseguia criar a lousa, escolher entre diversas atividades para a reunião e adicionar, remover ou editar um post-it ou comentário. Faltava adicionar a autenticação e autorização, deixar a lousa funcionando em tempo real e os \textit{dot voting}.
 
 Como já era um sistema utilizável, os idealizadores do projeto começaram a usá-lo para fazer as retrospectivas do time em que trabalham. Com isso, diversos testes das funcionalidades foram feitos, o que permitiu encontrar alguns bugs e definir novas funcionalidades para o sistema.
 
