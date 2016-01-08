@@ -83,7 +83,7 @@ O desenvolvimento da aplicação começou em setembro após o levantamento dos r
 Hoje em dia, uma das formas mais utilizadas no mercado para desenvolver aplicações web é através da arquitetura MVC (\textit{Model View Controller}), na qual seu sistema é dividido em três partes:
 
 \begin{itemize}
-	\item \textit{Models}: classes que representam as entidades do sistema (por exemplo, usuário e time) e as que te ajudam a armazenar e buscar os dados.
+	\item \textit{Models}: classes que representam as entidades do sistema (por exemplo, usuário e time) e as que ajudam a armazenar e buscar os dados.
 	\item \textit{Views}: responsável por apresentar os resultados na página web.
 	\item \textit{Controllers}: responsável por processar as requisições, instanciar os modelos necessários para realizar a tarefa requisitada e chamar as \textit{views}.
 \end{itemize}
@@ -92,23 +92,25 @@ Existem diversos \textit{frameworks} no mercado que seguem essa estrutura e o es
 
 \subsubsection*{Autenticação e Autorização}
 
-Como um dos requisitos do sistema era que uma pessoa pudesse criar uma lousa virtual e todos os integrantes do seu time participem da reunião através da mesma lousa, uma das necessidades do sistema é que o usuário se identifique através de um usuário (autenticação) e quando ele tentar acessar alguma tela o sistema precisa verificar se ele possui permissão (autorização).
+Como um dos requisitos do sistema é que uma pessoa possa criar uma lousa virtual e todos os integrantes do seu time possam participar da reunião através da mesma lousa, uma das necessidades do sistema é que o usuário se identifique através de um usuário (autenticação) e quando ele tentar acessar alguma tela o sistema verifique se ele possui permissão (autorização).
 
-Já existem diversas bibliotecas no mercado que já abstraem as lógicas de autenticação e autorização, sendo necessário apenas informar qual o modelo de usuário usado pelo sistema. O \textit{framework} escolhido foi o Spring Security devido à facilidade de integração com o Spring MVC.
+Já existem diversas bibliotecas no mercado que abstraem as lógicas de autenticação e autorização, sendo necessário apenas informar qual o modelo de usuário usado pelo sistema. O \textit{framework} escolhido foi o Spring Security devido à facilidade de integração com o Spring MVC.
 
 \subsubsection*{Banco de dados}
 
-Desde o início do projeto era óbvio que a aplicação precisaria de alguma banco para guardar os seus dados, como, por exemplo, os usuários, lousas virtuais, entre outros. A base de dados usada é o MySQL.
+Desde o início do projeto houve a necessidade de algum banco para guardar os seus dados, como, por exemplo, os usuários, lousas virtuais, entre outros. A base de dados usada é o MySQL.
 
-O sistema ainda precisava se integrar com o banco para conseguir armazenar o seus dados. O sistema está escrito na linguagem Java, cujo paradigma é a Orientação a Objetos e desta forma, todos os modelos são representados através de classes e objetos. No entanto, os bancos de dados como MySQL que seguem o paradigma Relacional, ou seja, tudo é guardado em tabelas. Por representarem os dados de formas completamente diferentes, existe uma barreira de comunicação entre a aplicação e o banco.
+% TODO: Revisar essa frase depois
 
-Já existem diversos \textit{frameworks} no mercado que já abstraem essa comunicação entre as aplicações orientadas a objetos e bancos relacionais, conhecidos como ORM (\textit{Object-relational Mapping}). O mais utilizado é o Hibernate e foi a escolha para o projeto.
+O sistema ainda precisava se integrar com o banco para conseguir armazenar seus dados. Como o sistema  está escrito na linguagem Java, cujo paradigma é a Orientação a Objetos, enquanto os bancos de dados SQL seguem o paradigma Relacional, existe uma barreira de comunicação entre eles.
+
+Já existem diversos \textit{frameworks} no mercado que abstraem essa comunicação entre as aplicações orientadas a objetos e bancos relacionais, conhecidos como ORM (\textit{Object-relational Mapping}). O mais utilizado é o Hibernate e foi a escolha para o projeto.
 
 \subsubsection*{Servidor de aplicação e WebSockets}
 
-Por se tratar de uma aplicação web, é essencial escolher em qual servidor rodará o sistema pois um dos requisitos do mesmo é possuir lousas pudessem ser acessadas por vários usuários e as alterações deveriam ser em tempo real. Uma das formas conhecidas para fazer essa funcionalidade é usar o conceito de WebSockets que é um protocolo de redes que estabelece como criar um canal de comunicação entre o navegador e o servidor.
+Por se tratar de uma aplicação web, é essencial escolher em qual servidor rodará o sistema pois um dos requisitos do mesmo é possuir lousas que possam ser acessadas por vários usuários e as alterações devem ser em tempo real. Uma das formas conhecidas para fazer essa funcionalidade é usar o conceito de WebSockets que é um protocolo de redes que estabelece como criar um canal de comunicação entre o navegador e o servidor.
 
-Através dos WebSockets, toda vez que um usuário acessar uma lousa virtual é criado um canal com o servidor, conhecido como socket. Através dele o navegador consegue enviar mensagens para o servidor informando todas as ações feitas pelo usuário, como adicionar um post-it, editar um comentário, entre outros. Quando o servidor receber essa mensagem ele consegue armazena no banco essa informação e a retransmite para todos os sockets que ele possui. Desta forma, cada integrante que está acessando a lousa virtual recebe a mensagem através do socket informando alguma alteração feita por outra pessoa e consegue reproduzi-la na sua tela.
+Através dos WebSockets, toda vez que um usuário acessar uma lousa virtual é criado um canal com o servidor, conhecido como socket. Através dele o navegador consegue enviar mensagens para o servidor informando todas as ações feitas pelo usuário, como a de adicionar um post-it, editar um comentário, entre outros. Quando o servidor receber essa mensagem, ele armazena no banco essa informação e a retransmite para todos os sockets que ele possui. Desta forma, cada integrante que está acessando a lousa virtual recebe a mensagem através do socket informando alguma alteração feita por outra pessoa e consegue reproduzi-la na sua tela.
 
 Essa ferramenta dos WebSockets ainda é recente e não são todos os servidores de aplicação que possuem suporte nativo para esse protocolo. Por isso o servidor escolhido foi o WildFly, desenvolvido pela RedHat, que já possui suporte para o WebSockets.
 
@@ -120,19 +122,21 @@ No caso deste trabalho a integração seria entre os \textit{frameworks} Spring 
 
 Criando o projeto no Setup My Project, bastou colocá-lo para rodar no servidor WildFly para ter um ambiente configurado e começar a implementar os requisitos do sistema em meados de setembro.
 
-Bastava dar um nome para o projeto. Devido uma antiga tradição no IME de que os projetos são do instituto recebem o nome de animais, a inspiração veio em procurar algum animal que saiba trabalhar bem em equipe. Assim o sistema do Suricato nasceu.
+Bastava dar um nome para o projeto. Devido uma antiga tradição no IME de que os projetos do instituto recebem o nome de animais, a inspiração veio em procurar algum animal que saiba trabalhar bem em equipe. Assim o sistema do Suricato nasceu.
 
-\subsubsection*{Dificuldades de integração WildFly WebSockets e Spring MVC}
+\subsubsection*{Dificuldades de integração WildFly, WebSockets e Spring MVC}
 
 Mesmo com o \textit{frameworks} configurados, ainda faltava habilitar o WebSocket implementado pelo WildFly para funcionar com o Spring MVC, o que acabou gerando alguns problemas na hora de implementar o sistema para funcionar em tempo real.
 
 A classe criada no sistema responsável por criar e utilizar o WebSocket do lado do servidor é a RetrospectivaEndpoint. Para marcá-la como uma classe do WebSocket basta anotar a classe com um @ServerEndpoint e passar qual a url pela qual o canal de comunicação será criado.
 
-O problema aconteceu para conseguir armazenar as informações no banco de dados. Todos os códigos usados para comunicação com o banco foram isolados em classes que seguem o padrão de projeto DAO~\footnote{http://www.oracle.com/technetwork/java/dataaccessobject-138824.html}. Por trabalhar com o Spring MVC, as classes DAO são anotadas com o @Repository. Com esta anotação, quem passa a gerenciar a classe -- cria objetos a partir dela e distribui esses objetos para outras classes que precisam usá-la -- é o Spring MVC. Esta forma de trabalhar do \textit{framework} segue dois padrões de projeto, o Inversion of Control Containers e a Dependency Injection~\footnote{http://www.martinfowler.com/articles/injection.html}.
+% TODO: Revisar a primeira frase
+
+Bastaria que esta classe armazenasse as informações recebidas através do \textit{socket} no banco de dados. Todos os códigos usados para comunicação com o banco foram isolados em classes que seguem o padrão de projeto DAO~\footnote{http://www.oracle.com/technetwork/java/dataaccessobject-138824.html}. Por trabalhar com o Spring MVC, as classes DAO são anotadas com o @Repository. Com esta anotação, quem passa a gerenciar a classe -- cria objetos a partir dela e distribui esses objetos para outras classes que precisam usá-la -- é o Spring MVC. Esta forma de trabalhar do \textit{framework} segue dois padrões de projeto, o Inversion of Control Containers e a Dependency Injection~\footnote{http://www.martinfowler.com/articles/injection.html}.
 
 Então o cenário do sistema é que havia a classe RetrospectivaEndpoint, gerenciada pelo servidor de aplicação WildFly. Esta classe precisava receber objetos DAO's para enviar as informações para o banco de dados, mas estes são gerenciados pelo Spring MVC. O problema é que as duas tecnologias não são capazes de enviar objetos em que uma delas está gerenciando a outra automaticamente.
 
-Mesmo pesquisando em blogs e fóruns se existiam outras pessoas que já passaram por esse problema de integração e como elas resolveram, nenhuma informação foi encontrada. Depois de algum tempo estudando mais a fundo as tecnologias e com a ajuda de pessoas da Caelum surgiu uma forma resolver este problema. O Spring MVC possui uma classe chamada de ApplicationContext, que possui objetos de todas as classes que ele gerencia, como os DAO's. Bastava criar a classe auxiliar ApplicationContextHolder, gerenciado pelo Spring e que possui um atributo estático que guarda um objeto de ApplicationContext. Por ser estático, qualquer outra classe do projeto pode acessá-lo, independente de qual tecnologia a gerencia. Assim, a classe RetrospectivaEndpoint consegue receber uma instância de ApplicationContext e, consequentemente, ao DAO.
+Mesmo pesquisando em blogs e fóruns se existiam outras pessoas que já passaram por esse problema de integração e como elas resolveram, nenhuma informação foi encontrada. Depois de algum tempo estudando mais a fundo as tecnologias e com a ajuda de pessoas da Caelum surgiu uma solução. O Spring MVC possui uma classe chamada de ApplicationContext, que possui objetos de todas as classes que ele gerencia, como os DAO's. Bastava criar a classe auxiliar ApplicationContextHolder, gerenciado pelo Spring e que possui um atributo estático que guarda um objeto de ApplicationContext. Por ser estático, qualquer outra classe do projeto pode acessá-lo, independente de qual tecnologia a gerencia. Assim, a classe RetrospectivaEndpoint consegue receber uma instância de ApplicationContext e, consequentemente, ao DAO.
 
 Esta solução para o problema de integrar o WebSockets do servidor de aplicação WildFly com o \textit{framework} Spring MVC foi publicado no blog sobre Spring de um colega da Caelum~\footnote{https://domineospring.wordpress.com/2015/11/03/um-pouco-de-gambi-nao-faz-mal-a-ninguem-spring-em-ambientes-nao-gerenciados/}. 
 
