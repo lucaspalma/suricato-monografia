@@ -128,7 +128,7 @@ Bastava dar um nome para o projeto. Devido uma antiga tradição no IME de que o
 
 \subsubsection*{Dificuldades de integração WildFly, WebSockets e Spring MVC}
 
-Mesmo com o \textit{frameworks} configurados, ainda faltava habilitar o WebSocket implementado pelo WildFly para funcionar com o Spring MVC, o que acabou gerando alguns problemas na hora de implementar o sistema para funcionar em tempo real.
+Mesmo com os \textit{frameworks} configurados, ainda faltava habilitar o WebSocket implementado pelo WildFly para funcionar com o Spring MVC.
 
 A classe criada no sistema responsável por criar e utilizar o WebSocket do lado do servidor é a RetrospectivaEndpoint. Para marcá-la como uma classe do WebSocket basta anotar a classe com um @ServerEndpoint e passar qual a url pela qual o canal de comunicação será criado.
 
