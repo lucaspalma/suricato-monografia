@@ -97,17 +97,16 @@ Existem diversos \textit{frameworks} no mercado que seguem essa estrutura e o es
 Como um dos requisitos do sistema é que uma pessoa possa criar uma lousa virtual e todos os integrantes do seu time possam participar da reunião através da mesma lousa, uma das necessidades do sistema é que o usuário se identifique através de um usuário (autenticação) e quando ele tentar acessar alguma tela o sistema verifique se ele possui permissão (autorização).
 
 Já existem diversas bibliotecas no mercado que abstraem as lógicas de autenticação e autorização, sendo necessário apenas informar qual o modelo de usuário usado pelo sistema. O \textit{framework} escolhido foi o Spring Security devido à facilidade de integração com o Spring MVC.
-
+%REVISAR A SUBSECAO
 \subsubsection*{Banco de dados}
 
 Desde o início do projeto houve a necessidade de algum banco para guardar os seus dados, como, por exemplo, os usuários, lousas virtuais, entre outros. A base de dados usada é o MySQL.
 
-% TODO: Revisar essa frase depois
 
 O sistema ainda precisava se integrar com o banco para conseguir armazenar seus dados. Como o sistema  está escrito na linguagem Java, cujo paradigma é a Orientação a Objetos, enquanto os bancos de dados SQL seguem o paradigma Relacional, existe uma barreira de comunicação entre eles.
 
 Já existem diversos \textit{frameworks} no mercado que abstraem essa comunicação entre as aplicações orientadas a objetos e bancos relacionais, conhecidos como ORM (\textit{Object-relational Mapping}). O mais utilizado é o Hibernate e foi a escolha para o projeto.
-
+%REVISAR A SUBSECAO
 \subsubsection*{Servidor de aplicação e WebSockets}
 
 Por se tratar de uma aplicação web, é essencial escolher em qual servidor rodará o sistema pois um dos requisitos do mesmo é possuir lousas que possam ser acessadas por vários usuários e as alterações devem ser em tempo real. Uma das formas conhecidas para fazer essa funcionalidade é usar o conceito de WebSockets. Um protocolo de redes que estabelece como criar um canal de comunicação entre o navegador e o servidor.
@@ -119,23 +118,22 @@ O WebSockets ainda é recente e não são todos os servidores de aplicação que
 \subsubsection*{Nascimento do Suricato}
 
 Uma das partes mais complicadas no começo de um grande projeto web é a integração entres os diversos \textit{frameworks} que serão usados. Isso envolve muitas horas escrevendo diversos arquivos de configuração, em geral arquivos XML (Extensible Markup Language). Mesmo programadores com mais experiência levam longas horas até que todas as configurações fiquem corretas. 
-	
-No caso deste trabalho a integração seria entre os \textit{frameworks} Spring MVC, Spring Security e Hibernate. Para não ocupar muito tempo com a configuração, o projeto foi gerado através do site Setup My Project~\footnote{http://www.setupmyproject.com/}. Ele permite que uma pessoa escolha quais tecnologias seu projeto usará e gera automaticamente uma versão simples de um sistema com todos os \textit{frameworks} escolhidos já configurados.
 
-Criando o projeto no Setup My Project, bastou colocá-lo para rodar no servidor WildFly para ter um ambiente configurado e começar a implementar os requisitos do sistema em meados de setembro.
+A integração seria entre os \textit{frameworks} Spring MVC, Spring Security e Hibernate. Para não ocupar muito tempo com a configuração, o projeto foi gerado através do site Setup My Project~\footnote{http://www.setupmyproject.com/}. Ele permite que uma pessoa escolha quais tecnologias seu projeto usará e gera automaticamente uma versão simples de um sistema com todos os \textit{frameworks} escolhidos já configurados.
 
-Bastava dar um nome para o projeto. Devido uma antiga tradição no IME de que os projetos do instituto recebem o nome de animais, a inspiração veio em procurar algum animal que saiba trabalhar bem em equipe. Assim o sistema do Suricato nasceu.
+Para a aplicação ficar no ar era necessário configurar um servidor de aplicação. Foi escolhido o WildFly, por ser mais compatível com a tecnologia de WebSocket.
+
+Devido uma antiga tradição no IME de que os projetos do instituto recebem o nome de animais, a inspiração veio em procurar algum animal que saiba trabalhar bem em equipe. Assim o sistema do Suricato nasceu.
 
 \subsubsection*{Dificuldades de integração WildFly, WebSockets e Spring MVC}
 
-Mesmo com os \textit{frameworks} configurados, ainda faltava habilitar o WebSocket implementado pelo WildFly para funcionar com o Spring MVC.
+Com os \textit{frameworks} configurados, faltava habilitar o WebSocket implementado pelo WildFly para funcionar com o Spring MVC.
 
 A classe criada no sistema responsável por criar e utilizar o WebSocket do lado do servidor é a RetrospectivaEndpoint. Para marcá-la como uma classe do WebSocket basta anotar a classe com um @ServerEndpoint e passar qual a url pela qual o canal de comunicação será criado.
 
-% TODO: Revisar a primeira frase
-
 Bastaria que esta classe armazenasse as informações recebidas através do \textit{socket} no banco de dados. Todos os códigos usados para comunicação com o banco foram isolados em classes que seguem o padrão de projeto DAO~\footnote{http://www.oracle.com/technetwork/java/dataaccessobject-138824.html}. Por trabalhar com o Spring MVC, as classes DAO são anotadas com o @Repository. Com esta anotação, quem passa a gerenciar a classe -- cria objetos a partir dela e distribui esses objetos para outras classes que precisam usá-la -- é o Spring MVC. Esta forma de trabalhar do \textit{framework} segue dois padrões de projeto, o Inversion of Control Containers e a Dependency Injection~\footnote{http://www.martinfowler.com/articles/injection.html}.
 
+%REVISAR OS PROXIMOS DOIS PARAGRAFOS
 Então o cenário do sistema é que havia a classe RetrospectivaEndpoint, gerenciada pelo servidor de aplicação WildFly. Esta classe precisava receber objetos DAO's para enviar as informações para o banco de dados, mas estes são gerenciados pelo Spring MVC. O problema é que as duas tecnologias não são capazes de enviar objetos em que uma delas está gerenciando a outra automaticamente.
 
 Mesmo pesquisando em blogs e fóruns se existiam outras pessoas que já passaram por esse problema de integração e como elas resolveram, nenhuma informação foi encontrada. Depois de algum tempo estudando mais a fundo as tecnologias e com a ajuda de pessoas da Caelum surgiu uma solução. O Spring MVC possui uma classe chamada de ApplicationContext, que possui objetos de todas as classes que ele gerencia, como os DAO's. Bastava criar a classe auxiliar ApplicationContextHolder, gerenciado pelo Spring e que possui um atributo estático que guarda um objeto de ApplicationContext. Por ser estático, qualquer outra classe do projeto pode acessá-lo, independente de qual tecnologia a gerencia. Assim, a classe RetrospectivaEndpoint consegue receber uma instância de ApplicationContext e, consequentemente, ao DAO.
@@ -143,10 +141,10 @@ Mesmo pesquisando em blogs e fóruns se existiam outras pessoas que já passaram
 Esta solução para o problema de integrar o WebSockets do servidor de aplicação WildFly com o \textit{framework} Spring MVC foi publicado no blog sobre Spring de um colega da Caelum~\footnote{https://domineospring.wordpress.com/2015/11/03/um-pouco-de-gambi-nao-faz-mal-a-ninguem-spring-em-ambientes-nao-gerenciados/}. 
 
 \subsection{Testes do software}
+%Vê se ficou bom%
+O sistema já tinha as funcionalidades mínimas para ser utilizável. Um usuário conseguia criar a lousa, escolher entre diversas atividades para a reunião e adicionar, remover ou editar um post-it ou comentário. Faltava adicionar a autenticação e autorização, deixar a lousa funcionando em tempo real e os \textit{dot voting}.
 
-Após a primeira fase de desenvolvimento o sistema já tinha as funcionalidades mínimas para que alguma pessoa pudesse usá-lo. Um usuário conseguia criar a lousa, escolher entre diversas atividades para a reunião e adicionar, remover ou editar um post-it ou comentário. Faltava adicionar a autenticação e autorização, deixar a lousa funcionando em tempo real e os \textit{dot voting}.
-
-Como já era um sistema utilizável, os idealizadores do projeto começaram a usá-lo para fazer as retrospectivas do time em que trabalham. Com isso, diversos testes das funcionalidades foram feitos, o que permitiu encontrar alguns bugs e definir novas funcionalidades para o sistema.
+O sistema foi utilizado em equipes pequenas, apenas para recever feedbacks. Com isso, diversos testes das funcionalidades foram feitos, o que permitiu encontrar alguns bugs e definir novas funcionalidades para o sistema.
 
 Dentre as novas funcionalidades definidas depois de realizar os testes, as principais foram:
 
@@ -157,8 +155,8 @@ Dentre as novas funcionalidades definidas depois de realizar os testes, as princ
 \end{enumerate}
 
 \subsubsection*{Layout}
-
-Em meados de novembro todas as funcionalidades já estavam implementadas. No entanto, um dos pontos mais abordado durante os testes foi o layout do Suricato. Como os idealizadores do projeto ainda não possuem muita experiência na área de design e user experience, todas as telas do sistema continham pouco estilo e não eram muito agradáveis visualmente.
+%RESUMI
+O Suricato ainda tinha o problema do layout. 
 
 \begin{figure}[H]
   \centering
@@ -183,7 +181,7 @@ Em meados de novembro todas as funcionalidades já estavam implementadas. No ent
   }
   \caption{Tela antiga para criar lousa virtual}\label{figura:criarAntigo}
 \end{figure}
-
+%Falta essas partes
 Antes de liberar o sistema para ser usado pelos times era crucial arrumar o layout do sistema. Para isso foi necessário o auxílio de outras pessoas que trabalham na Caelum e tinham mais experiência e poderiam sugerir ideias de como melhorar as páginas do sistema. O designer Fabio Gushiken projetou o logo do sistema inspirado no seu nome. Já o designer Leonardo Guerra desenhou algumas atividades das retrospectivas, como a Speed Car e Hot Air Balloon.
 
 Para melhorar a experiência do usuário, os participantes fizeram uma reunião com o instrutor Marco Bruno, que dá aulas de UX e linguagens Front-End na Caelum. Durante a reunião foi explicado quais eram as funcionalidades do sistema e o estado atual das telas. A partir daí discutimos com o instrutor como remodelar o layout para deixá-lo mais agradável. O desenho do que foi planejado nessa reunião está abaixo.
@@ -229,7 +227,7 @@ Portanto, no fim do projeto o foco foi desenvolver as páginas seguindo os que f
   }
   \caption{Tela da lousa virtual}\label{figura:Retrospectiva}
 \end{figure}
-
+%Falta
 \subsection{Hospedagem}
 
 Com a primeira versão do sistema pronta, faltava apenas hospedar o site. Como o servidor de aplicação era o WildFly da RedHat, a primeira opção foi usar o serviço da Openshift~\footnote{https://www.openshift.com/}, também da RedHat. Essa plataforma permite que qualquer pessoa hospede de graça sua aplicação web e possui máquinas preparadas para usar o WildFly. Por ser gratuito, o Openshift desliga a máquina quando ninguém está usando o sistema e liga quando um usuário tenta acessá-la. No entanto, para o Suricato as máquinas se mostraram muito instáveis, já que depois de ligá-la o sistema não era colocado no ar automaticamente. Alguém precisava se conectar via ssh na máquina e rodar comandos para que o projeto subisse.
