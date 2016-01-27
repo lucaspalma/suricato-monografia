@@ -3,7 +3,7 @@
 %TODO : revisar esta parte com a Ceci
 
 
-A partir dos resultados obtidos na pesquisa o próximo passo do trabalho foi  planejar e desenvolver um sistema com o objetivo de auxiliar os times ágeis nas suas reuniões de melhoria contínua.
+A partir dos resultados obtidos na pesquisa o próximo passo do trabalho foi planejar e desenvolver um sistema com o objetivo de auxiliar os times ágeis nas suas reuniões de melhoria contínua.
 
 O levantamento dos requisitos foi feito em meados de agosto e a implementação da aplicação ocorreu de setembro até novembro. O código do projeto está em um repositório do GitHub~\footnote{https://github.com/mxball/suricato}.
 
@@ -16,6 +16,7 @@ A pesquisa gerou conhecimentos empíricos sobre os problemas enfrentados na prom
 
 \subsection{Requisitos do sistema}
 
+%LUCAS: o Planejamento já fala algumas das coisas desses dois parágrafos
 Os resultados da pesquisa serviram como base para os requisitos do sistema. Nota-se que a grande maioria dos times ainda fazem retrospectivas, com exceção dos times distribuídos em diversos fusos horários. Esses times utilizam reuniões parecidas com retrospectivas, como, por exemplo, as \textit{conference calls}. A única diferença é que elas não seguem uma estrutura como a retrospectiva, como a apresentada por Derby e Larsen~\cite{retrospectives}. 
 
 Os requisitos da aplicação foram baseados na forma como a retrospectiva é feita localmente. No entanto, ela não exige que o time siga o seu fluxo predefinido, como outras aplicações encontradas no mercado obrigam, por exemplo, a Retrium~\footnote{https://retrium.com/}.
@@ -100,16 +101,17 @@ Já existem diversas bibliotecas no mercado que abstraem as lógicas de autentic
 %REVISAR A SUBSECAO
 \subsubsection*{Banco de dados}
 
+%LUCAS: Essa linha vai sumir ne?
 Desde o início do projeto houve a necessidade de algum banco para guardar os seus dados, como, por exemplo, os usuários, lousas virtuais, entre outros. A base de dados usada é o MySQL.
 
-
+%LUCAS (Sugestão para a primeira frase): Como o sistema trabalha com diversas informações, como os usuários e as lousas virtuais, ele precisa se integrar com algum banco para armazenar seus dados. 
 O sistema ainda precisava se integrar com o banco para conseguir armazenar seus dados. Como o sistema  está escrito na linguagem Java, cujo paradigma é a Orientação a Objetos, enquanto os bancos de dados SQL seguem o paradigma Relacional, existe uma barreira de comunicação entre eles.
 
 Já existem diversos \textit{frameworks} no mercado que abstraem essa comunicação entre as aplicações orientadas a objetos e bancos relacionais, conhecidos como ORM (\textit{Object-relational Mapping}). O mais utilizado é o Hibernate e foi a escolha para o projeto.
 %REVISAR A SUBSECAO
 \subsubsection*{Servidor de aplicação e WebSockets}
 
-Por se tratar de uma aplicação web, é essencial escolher em qual servidor rodará o sistema pois um dos requisitos do mesmo é possuir lousas que possam ser acessadas por vários usuários e as alterações devem ser em tempo real. Uma das formas conhecidas para fazer essa funcionalidade é usar o conceito de WebSockets. Um protocolo de redes que estabelece como criar um canal de comunicação entre o navegador e o servidor.
+Por se tratar de uma aplicação web, é essencial escolher em qual servidor rodará o sistema pois um dos requisitos do mesmo é possuir lousas que possam ser acessadas por vários usuários e as alterações devem ser em tempo real. Uma das formas conhecidas para fazer essa funcionalidade é usar o conceito de WebSockets -- um protocolo de redes que estabelece como criar um canal de comunicação entre o navegador e o servidor.
 
 Toda vez que um usuário acessar uma lousa virtual é criado um canal com o servidor, conhecido como socket. Através dele o navegador consegue enviar mensagens para o servidor informando todas as ações feitas pelo usuário, como a de adicionar um post-it, editar um comentário, entre outros. Quando o servidor receber essa mensagem, ele armazena no banco essa informação e a retransmite para todos os sockets que ele possui. Cada integrante que está acessando a lousa virtual recebe a mensagem através do socket informando alguma alteração feita por outra pessoa e consegue reproduzi-la na sua tela.
 
@@ -121,9 +123,10 @@ Uma das partes mais complicadas no começo de um grande projeto web é a integra
 
 A integração seria entre os \textit{frameworks} Spring MVC, Spring Security e Hibernate. Para não ocupar muito tempo com a configuração, o projeto foi gerado através do site Setup My Project~\footnote{http://www.setupmyproject.com/}. Ele permite que uma pessoa escolha quais tecnologias seu projeto usará e gera automaticamente uma versão simples de um sistema com todos os \textit{frameworks} escolhidos já configurados.
 
+%LUCAS: Na subsecao anterior já foi explicado essa parte do porque escolher o wildfly. Acho que essa linha pode ser apagada
 Para a aplicação ficar no ar era necessário configurar um servidor de aplicação. Foi escolhido o WildFly, por ser mais compatível com a tecnologia de WebSocket.
 
-Devido uma antiga tradição no IME de que os projetos do instituto recebem o nome de animais, a inspiração veio em procurar algum animal que saiba trabalhar bem em equipe. Assim o sistema do Suricato nasceu.
+Devido uma antiga tradição no IME de que os projetos do instituto recebem o nome de animais, a inspiração veio em procurar algum animal que saiba trabalhar bem em equipe. Assim, o sistema do Suricato nasceu.
 
 \subsubsection*{Dificuldades de integração WildFly, WebSockets e Spring MVC}
 
@@ -134,19 +137,21 @@ A classe criada no sistema responsável por criar e utilizar o WebSocket do lado
 Bastaria que esta classe armazenasse as informações recebidas através do \textit{socket} no banco de dados. Todos os códigos usados para comunicação com o banco foram isolados em classes que seguem o padrão de projeto DAO~\footnote{http://www.oracle.com/technetwork/java/dataaccessobject-138824.html}. Por trabalhar com o Spring MVC, as classes DAO são anotadas com o @Repository. Com esta anotação, quem passa a gerenciar a classe -- cria objetos a partir dela e distribui esses objetos para outras classes que precisam usá-la -- é o Spring MVC. Esta forma de trabalhar do \textit{framework} segue dois padrões de projeto, o Inversion of Control Containers e a Dependency Injection~\footnote{http://www.martinfowler.com/articles/injection.html}.
 
 %REVISAR OS PROXIMOS DOIS PARAGRAFOS
-Então o cenário do sistema é que havia a classe RetrospectivaEndpoint, gerenciada pelo servidor de aplicação WildFly. Esta classe precisava receber objetos DAO's para enviar as informações para o banco de dados, mas estes são gerenciados pelo Spring MVC. O problema é que as duas tecnologias não são capazes de enviar objetos em que uma delas está gerenciando a outra automaticamente.
+%LUCAS: fiz mudanças bem pequenas nos dois parágrafos, ve o que você acha
+Então o cenário do sistema é que havia a classe RetrospectivaEndpoint, gerenciada pelo servidor de aplicação WildFly. Esta classe precisava receber objetos DAO's para enviar as informações para o banco de dados, mas estes são gerenciados pelo Spring MVC. O problema é que as duas tecnologias não são capazes de enviar objetos que uma delas está gerenciando para a outra.
 
 Mesmo pesquisando em blogs e fóruns se existiam outras pessoas que já passaram por esse problema de integração e como elas resolveram, nenhuma informação foi encontrada. Depois de algum tempo estudando mais a fundo as tecnologias e com a ajuda de pessoas da Caelum surgiu uma solução. O Spring MVC possui uma classe chamada de ApplicationContext, que possui objetos de todas as classes que ele gerencia, como os DAO's. Bastava criar a classe auxiliar ApplicationContextHolder, gerenciado pelo Spring e que possui um atributo estático que guarda um objeto de ApplicationContext. Por ser estático, qualquer outra classe do projeto pode acessá-lo, independente de qual tecnologia a gerencia. Assim, a classe RetrospectivaEndpoint consegue receber uma instância de ApplicationContext e, consequentemente, ao DAO.
 
-Esta solução para o problema de integrar o WebSockets do servidor de aplicação WildFly com o \textit{framework} Spring MVC foi publicado no blog sobre Spring de um colega da Caelum~\footnote{https://domineospring.wordpress.com/2015/11/03/um-pouco-de-gambi-nao-faz-mal-a-ninguem-spring-em-ambientes-nao-gerenciados/}. 
+Esta solução para o problema de integrar o WebSockets do servidor de aplicação WildFly com o \textit{framework} Spring MVC foi publicado no blog Domine o Spring~\footnote{https://domineospring.wordpress.com/2015/11/03/um-pouco-de-gambi-nao-faz-mal-a-ninguem-spring-em-ambientes-nao-gerenciados/}. 
 
 \subsection{Testes do software}
 %Vê se ficou bom%
-O sistema já tinha as funcionalidades mínimas para ser utilizável. Um usuário conseguia criar a lousa, escolher entre diversas atividades para a reunião e adicionar, remover ou editar um post-it ou comentário. Faltava adicionar a autenticação e autorização, deixar a lousa funcionando em tempo real e os \textit{dot voting}.
+%LUCAS: mudei um pouco aqui
+O sistema já tinha as funcionalidades mínimas para ser utilizável. Um usuário consegue criar a lousa, escolher entre diversas atividades para a reunião e adicionar, remover ou editar um post-it ou comentário. Faltava adicionar a autenticação e autorização, deixar a lousa funcionando em tempo real e os \textit{dot voting}.
 
-O sistema foi utilizado em equipes pequenas, apenas para recever feedbacks. Com isso, diversos testes das funcionalidades foram feitos, o que permitiu encontrar alguns bugs e definir novas funcionalidades para o sistema.
+Antes de implementar estes requisitos, o sistema foi utilizado em equipes pequenas para receber feedbacks. Diversos testes das funcionalidades foram feitos e, consequentemente, alguns bugs foram encontrados.
 
-Dentre as novas funcionalidades definidas depois de realizar os testes, as principais foram:
+Para corrigir esses erros, surgiram novas funcionalidades:
 
 \begin{enumerate}
 	\item o usuário pode regular o tamanho de um comentário e o tamanho dos post-its é fixo.
@@ -156,7 +161,7 @@ Dentre as novas funcionalidades definidas depois de realizar os testes, as princ
 
 \subsubsection*{Layout}
 %RESUMI
-O Suricato ainda tinha o problema do layout. 
+O Suricato ainda tinha problemas de layout. 
 
 \begin{figure}[H]
   \centering
