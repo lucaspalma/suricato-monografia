@@ -137,7 +137,6 @@ A classe criada no sistema responsável por criar e utilizar o WebSocket do lado
 Bastaria que esta classe armazenasse as informações recebidas através do \textit{socket} no banco de dados. Todos os códigos usados para comunicação com o banco foram isolados em classes que seguem o padrão de projeto DAO~\footnote{http://www.oracle.com/technetwork/java/dataaccessobject-138824.html}. Por trabalhar com o Spring MVC, as classes DAO são anotadas com o @Repository. Com esta anotação, quem passa a gerenciar a classe -- cria objetos a partir dela e distribui esses objetos para outras classes que precisam usá-la -- é o Spring MVC. Esta forma de trabalhar do \textit{framework} segue dois padrões de projeto, o Inversion of Control Containers e a Dependency Injection~\footnote{http://www.martinfowler.com/articles/injection.html}.
 
 %REVISAR OS PROXIMOS DOIS PARAGRAFOS
-%LUCAS: fiz mudanças bem pequenas nos dois parágrafos, ve o que você acha
 Então o cenário do sistema é que havia a classe RetrospectivaEndpoint, gerenciada pelo servidor de aplicação WildFly. Esta classe precisava receber objetos DAO's para enviar as informações para o banco de dados, mas estes são gerenciados pelo Spring MVC. O problema é que as duas tecnologias não são capazes de enviar objetos que uma delas está gerenciando para a outra.
 
 Mesmo pesquisando em blogs e fóruns se existiam outras pessoas que já passaram por esse problema de integração e como elas resolveram, nenhuma informação foi encontrada. Depois de algum tempo estudando mais a fundo as tecnologias e com a ajuda de pessoas da Caelum surgiu uma solução. O Spring MVC possui uma classe chamada de ApplicationContext, que possui objetos de todas as classes que ele gerencia, como os DAO's. Bastava criar a classe auxiliar ApplicationContextHolder, gerenciado pelo Spring e que possui um atributo estático que guarda um objeto de ApplicationContext. Por ser estático, qualquer outra classe do projeto pode acessá-lo, independente de qual tecnologia a gerencia. Assim, a classe RetrospectivaEndpoint consegue receber uma instância de ApplicationContext e, consequentemente, ao DAO.
@@ -145,8 +144,7 @@ Mesmo pesquisando em blogs e fóruns se existiam outras pessoas que já passaram
 Esta solução para o problema de integrar o WebSockets do servidor de aplicação WildFly com o \textit{framework} Spring MVC foi publicado no blog Domine o Spring~\footnote{https://domineospring.wordpress.com/2015/11/03/um-pouco-de-gambi-nao-faz-mal-a-ninguem-spring-em-ambientes-nao-gerenciados/}. 
 
 \subsection{Testes do software}
-%Vê se ficou bom%
-%LUCAS: mudei um pouco aqui
+
 O sistema já tinha as funcionalidades mínimas para ser utilizável. Um usuário consegue criar a lousa, escolher entre diversas atividades para a reunião e adicionar, remover ou editar um post-it ou comentário. Faltava adicionar a autenticação e autorização, deixar a lousa funcionando em tempo real e os \textit{dot voting}.
 
 Antes de implementar estes requisitos, o sistema foi utilizado em equipes pequenas para receber feedbacks. Diversos testes das funcionalidades foram feitos e, consequentemente, alguns bugs foram encontrados.
@@ -160,7 +158,6 @@ Para corrigir esses erros, surgiram novas funcionalidades:
 \end{enumerate}
 
 \subsubsection*{Layout}
-%RESUMI
 O Suricato ainda tinha problemas de layout. 
 
 \begin{figure}[H]
@@ -186,10 +183,8 @@ O Suricato ainda tinha problemas de layout.
   }
   \caption{Tela antiga para criar lousa virtual}\label{figura:criarAntigo}
 \end{figure}
-%Falta essas partes
-Antes de liberar o sistema para ser usado pelos times era crucial arrumar o layout do sistema. Para isso foi necessário o auxílio de outras pessoas que trabalham na Caelum e tinham mais experiência e poderiam sugerir ideias de como melhorar as páginas do sistema. O designer Fabio Gushiken projetou o logo do sistema inspirado no seu nome. Já o designer Leonardo Guerra desenhou algumas atividades das retrospectivas, como a Speed Car e Hot Air Balloon.
 
-Para melhorar a experiência do usuário, os participantes fizeram uma reunião com o instrutor Marco Bruno, que dá aulas de UX e linguagens Front-End na Caelum. Durante a reunião foi explicado quais eram as funcionalidades do sistema e o estado atual das telas. A partir daí discutimos com o instrutor como remodelar o layout para deixá-lo mais agradável. O desenho do que foi planejado nessa reunião está abaixo.
+Para liberar o sistema era necessário planejar um layout. O designer Fabio Gushiken foi o responsável por desenhar o logo baseado no suricato. Algumas atividades era necessário fazer o desenho de fundo da lousa virtual, o designer Leonardo Guerra colaborou com as atividades de Speed Car e Hot Air Balloon. Para melhorar a usabilidade do sistema o instutor Marco Bruno planejou o fluxo que um usuário do sistema poderia seguir e remodelou as telas pensando nesse fluxo.
 
 \begin{figure}[H]
   \centering
@@ -199,7 +194,7 @@ Para melhorar a experiência do usuário, os participantes fizeram uma reunião 
   \caption{Modelagem das telas com UX}\label{figura:ux}
 \end{figure}
 
-Portanto, no fim do projeto o foco foi desenvolver as páginas seguindo os que foi planejado na reunião. Atualmente, as telas encontram-se da seguinte forma:
+Para arrumar o layout o foco foi desenvolver as páginas seguindo o que foi planejado na reunião. Abaixo o resultado final:
 
 \begin{figure}[H]
   \centering
