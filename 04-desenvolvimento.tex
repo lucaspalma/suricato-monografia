@@ -227,11 +227,11 @@ Para arrumar o layout o foco foi desenvolver as páginas seguindo o que foi plan
   }
   \caption{Tela da lousa virtual}\label{figura:Retrospectiva}
 \end{figure}
-%Falta
+
 \subsection{Hospedagem}
 
-Com a primeira versão do sistema pronta, faltava apenas hospedar o site. Como o servidor de aplicação era o WildFly da RedHat, a primeira opção foi usar o serviço da Openshift~\footnote{https://www.openshift.com/}, também da RedHat. Essa plataforma permite que qualquer pessoa hospede de graça sua aplicação web e possui máquinas preparadas para usar o WildFly. Por ser gratuito, o Openshift desliga a máquina quando ninguém está usando o sistema e liga quando um usuário tenta acessá-la. No entanto, para o Suricato as máquinas se mostraram muito instáveis, já que depois de ligá-la o sistema não era colocado no ar automaticamente. Alguém precisava se conectar via ssh na máquina e rodar comandos para que o projeto subisse.
+Para possibilitar o acesso, o sistema, foi colocado no serviço da Openshift~\footnote{https://www.openshift.com/}. Essa plataforma permite que qualquer pessoa hospede de graça sua aplicação web e possui máquinas preparadas para usar o WildFly.Por ser gratuito, o Openshift desliga a máquina quando ninguém está usando o sistema e liga quando um usuário tenta acessá-la. No entanto, para o Suricato as máquinas se mostraram muito instáveis, já que depois de ligá-la o sistema não era colocado no ar automaticamente. 
 
-Devido a instabilidade da Openshift, tempos depois o sistema foi hospedado na Amazon Web Services~\footnote{https://aws.amazon.com/}. Mesmo levando alguns dias para criar a máquina e preparar o ambiente para rodar com o WildFly, o serviço é bem mais confiável e estável.
+A outra possibilidade foi hospedar no serviço da Amazon, o Amazon Web Service~\footnote{https://aws.amazon.com/}. O serviço exige um custo extras e um domínio para servir de servidor DNS da aplicação. Porém é mais confiável e estável.
 
 Atualmente o domínio usado para acessar o projeto é http://suricatoagil.com/login.
