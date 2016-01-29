@@ -10,7 +10,7 @@ O levantamento dos requisitos foi feito em meados de agosto e a implementação 
 \subsection{Planejamento}
 
 %está ruim
-A pesquisa gerou conhecimentos empíricos sobre os problemas enfrentados na promoção de melhoria contínua. O planejamento da aplicação pode-se resumir a algumas metas a serem alcançadas: (i)Desenvolver a lousa virtual, (ii)guardar as informações dos usuários, (iii)subir o sistema web, e (iv)layout satisfatório.
+A pesquisa gerou conhecimentos empíricos sobre os problemas enfrentados na promoção de melhoria contínua. O planejamento da aplicação pode-se resumir a algumas metas a serem alcançadas: (i)Desenvolver uma lousa virtual, (ii)guardar as informações dos usuários, (iii)subir o sistema web, e (iv)layout satisfatório.
 
 %O planejamento da aplicação ocorreu de meados de agosto até o começo de setembro. Como o objetivo da aplicação é ajudar qualquer tipo de equipe, seja local ou distribuído, uma das necessidades é que a aplicação seja acessível pelas máquinas de todos os integrante, independente de sistema operacional. Portanto a opção foi desenvolver uma aplicação web, já que o usuário consegue acessar o sistema através de qualquer navegador.
 
@@ -35,11 +35,11 @@ Os desafios mais citados pelos times que fazem a retrospectiva foram a falta de 
 
 Para investigar os pontos levantados nesses artigos, foi adicionada uma pergunta a ser respondida apenas por times que fazem retrospectivas sobre a alternância de atividades nessa reunião e, em caso positivo, quais são as atividades mais utilizadas. As repostas não foram conclusivas, mas geraram a hipótese de que os times variam as atividades mas não o tipo da atividade. Das retrospectivas citadas pelos times que responderam sim, a maior parte delas eram do formato de encontrar problemas e discutir soluções. 
 
-A pesquisa não foi suficiente para contrapor os artigos, foi adicionado os requisitos que incentivam os usuários a variar seus tipos de atividades. Para isso, o sistema deveria conter uma listagem com os mais diversos formatos de atividades para o usuário escolher. A apresentação das diversas opções pode ajudar os times a conhecerem novas retrospectivas e alternar entre os diversos tipos. Isso pode resolver os  problemas de falta de engajamento das pessoas e as discussões pouco produtivas.
+A pesquisa não foi suficiente para contrapor os artigos, foram adicionados requisitos que incentivam os usuários a variar seus tipos de atividades. Para isso, o sistema deveria conter uma listagem com os mais diversos formatos de atividades para o usuário escolher. A apresentação das diversas opções pode ajudar os times a conhecerem novas retrospectivas e alternar entre os diversos tipos. Isso pode resolver os  problemas de falta de engajamento das pessoas e as discussões pouco produtivas.
 
 \subsubsection*{Tempo real}
 
-Como os times são formados por um conjunto de pessoas e como elas podem estar espalhados por diversas regiões, um dos principais requisitos definidos é que todos os integrantes devem mexer na mesma lousa virtual. As lousas foram planejadas  para funcionarem em tempo real para muitos usuários, ou seja, todos os usuários estão visualizando a mesma lousa e tudo que for alterado por alguma pessoa será mostrado no navegador dos outros integrantes.
+Como os times são formados por um conjunto de pessoas e como elas podem estar espalhadas por diversas regiões, um dos principais requisitos definidos é que todos os integrantes devem mexer na mesma lousa virtual. As lousas foram planejadas  para funcionarem em tempo real para muitos usuários, ou seja, todos os usuários estão visualizando a mesma lousa e tudo que for alterado por alguma pessoa será mostrado no navegador dos outros integrantes.
 
 \subsubsection*{\textit{Dot voting} (votação nas opções preferidas)}
 
@@ -115,7 +115,7 @@ Por se tratar de uma aplicação web, é essencial escolher em qual servidor rod
 
 Toda vez que um usuário acessar uma lousa virtual é criado um canal com o servidor, conhecido como socket. Através dele o navegador consegue enviar mensagens para o servidor informando todas as ações feitas pelo usuário, como a de adicionar um post-it, editar um comentário, entre outros. Quando o servidor receber essa mensagem, ele armazena no banco essa informação e a retransmite para todos os sockets que ele possui. Cada integrante que está acessando a lousa virtual recebe a mensagem através do socket informando alguma alteração feita por outra pessoa e consegue reproduzi-la na sua tela.
 
-O WebSockets ainda é recente e não são todos os servidores de aplicação que possuem suporte nativo para esse protocolo. Por isso o servidor escolhido foi o WildFly, desenvolvido pela RedHat, que já possui suporte.
+O WebSockets ainda é recente e não são todos os servidores de aplicação que possuem suporte nativo para esse protocolo. Por isso o servidor escolhido foi o WildFly, desenvolvido pela RedHat, que já possui essa funcionalidade.
 
 \subsubsection*{Nascimento do Suricato}
 
@@ -123,10 +123,7 @@ Uma das partes mais complicadas no começo de um grande projeto web é a integra
 
 A integração seria entre os \textit{frameworks} Spring MVC, Spring Security e Hibernate. Para não ocupar muito tempo com a configuração, o projeto foi gerado através do site Setup My Project~\footnote{http://www.setupmyproject.com/}. Ele permite que uma pessoa escolha quais tecnologias seu projeto usará e gera automaticamente uma versão simples de um sistema com todos os \textit{frameworks} escolhidos já configurados.
 
-%LUCAS: Na subsecao anterior já foi explicado essa parte do porque escolher o wildfly. Acho que essa linha pode ser apagada
-Para a aplicação ficar no ar era necessário configurar um servidor de aplicação. Foi escolhido o WildFly, por ser mais compatível com a tecnologia de WebSocket.
-
-Devido uma antiga tradição no IME de que os projetos do instituto recebem o nome de animais, a inspiração veio em procurar algum animal que saiba trabalhar bem em equipe. Assim, o sistema do Suricato nasceu.
+Devido uma antiga tradição no IME de que os projetos do instituto recebem o nome de animais, a inspiração veio em procurar algum animal que saiba trabalhar bem em equipe. Assim, o sistema Suricato nasceu.
 
 \subsubsection*{Dificuldades de integração WildFly, WebSockets e Spring MVC}
 
@@ -184,7 +181,7 @@ O Suricato ainda tinha problemas de layout.
   \caption{Tela antiga para criar lousa virtual}\label{figura:criarAntigo}
 \end{figure}
 
-Para liberar o sistema era necessário planejar um layout. O designer Fabio Gushiken foi o responsável por desenhar o logo baseado no suricato. Algumas atividades era necessário fazer o desenho de fundo da lousa virtual, o designer Leonardo Guerra colaborou com as atividades de Speed Car e Hot Air Balloon. Para melhorar a usabilidade do sistema o instutor Marco Bruno planejou o fluxo que um usuário do sistema poderia seguir e remodelou as telas pensando nesse fluxo.
+Para liberar o sistema era necessário planejar um layout. O designer Fabio Gushiken foi o responsável por desenhar o logo baseado no suricato. Algumas atividades era necessário fazer o desenho de fundo da lousa virtual, o designer Leonardo Guerra colaborou com as atividades de Speed Car e Hot Air Balloon. Para melhorar a usabilidade do sistema o designer Marco Bruno planejou o fluxo que um usuário do sistema poderia seguir e remodelou as telas pensando nesse fluxo.
 
 \begin{figure}[H]
   \centering
@@ -230,7 +227,7 @@ Para arrumar o layout o foco foi desenvolver as páginas seguindo o que foi plan
 
 \subsection{Hospedagem}
 
-Para possibilitar o acesso, o sistema, foi colocado no serviço da Openshift~\footnote{https://www.openshift.com/}. Essa plataforma permite que qualquer pessoa hospede de graça sua aplicação web e possui máquinas preparadas para usar o WildFly.Por ser gratuito, o Openshift desliga a máquina quando ninguém está usando o sistema e liga quando um usuário tenta acessá-la. No entanto, para o Suricato as máquinas se mostraram muito instáveis, já que depois de ligá-la o sistema não era colocado no ar automaticamente. 
+Para possibilitar o acesso, o sistema, foi colocado no serviço da Openshift~\footnote{https://www.openshift.com/}. Essa plataforma permite que qualquer pessoa hospede de graça sua aplicação web e possui máquinas preparadas para usar o WildFly. Por ser gratuito, o Openshift desliga a máquina quando ninguém está usando o sistema e liga quando um usuário tenta acessá-la. No entanto, para o Suricato as máquinas se mostraram muito instáveis, já que depois de ligá-la o sistema não era colocado no ar automaticamente. 
 
 A outra possibilidade foi hospedar no serviço da Amazon, o Amazon Web Service~\footnote{https://aws.amazon.com/}. O serviço exige um custo extras e um domínio para servir de servidor DNS da aplicação. Porém é mais confiável e estável.
 
