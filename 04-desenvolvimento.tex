@@ -1,22 +1,16 @@
 \section{Desenvolvimento}
 
-%TODO : revisar esta parte com a Ceci
-
-
 A partir dos resultados obtidos na pesquisa o próximo passo do trabalho foi planejar e desenvolver um sistema com o objetivo de auxiliar os times ágeis nas suas reuniões de melhoria contínua.
 
 O levantamento dos requisitos foi feito em meados de agosto e a implementação da aplicação ocorreu de setembro até novembro. O código do projeto está em um repositório do GitHub~\footnote{https://github.com/mxball/suricato}.
 
 \subsection{Planejamento}
 
-%está ruim
 A pesquisa gerou conhecimentos empíricos sobre os problemas enfrentados na promoção de melhoria contínua. O planejamento da aplicação pode-se resumir a algumas metas a serem alcançadas: (i)Desenvolver uma lousa virtual, (ii)guardar as informações dos usuários, (iii)subir o sistema web, e (iv)layout satisfatório.
 
-%O planejamento da aplicação ocorreu de meados de agosto até o começo de setembro. Como o objetivo da aplicação é ajudar qualquer tipo de equipe, seja local ou distribuído, uma das necessidades é que a aplicação seja acessível pelas máquinas de todos os integrante, independente de sistema operacional. Portanto a opção foi desenvolver uma aplicação web, já que o usuário consegue acessar o sistema através de qualquer navegador.
 
 \subsection{Requisitos do sistema}
 
-%LUCAS: o Planejamento já fala algumas das coisas desses dois parágrafos
 Os resultados da pesquisa serviram como base para os requisitos do sistema. Nota-se que a grande maioria dos times ainda fazem retrospectivas, com exceção dos times distribuídos em diversos fusos horários. Esses times utilizam reuniões parecidas com retrospectivas, como, por exemplo, as \textit{conference calls}. A única diferença é que elas não seguem uma estrutura como a retrospectiva, como a apresentada por Derby e Larsen~\cite{retrospectives}. 
 
 Os requisitos da aplicação foram baseados na forma como a retrospectiva é feita localmente. No entanto, ela não exige que o time siga o seu fluxo predefinido, como outras aplicações encontradas no mercado obrigam, por exemplo, a Retrium~\footnote{https://retrium.com/}.
@@ -91,24 +85,23 @@ Hoje em dia, uma das formas mais utilizadas no mercado para desenvolver aplicaç
 	\item \textit{Controllers}: responsável por processar as requisições, instanciar os modelos necessários para realizar a tarefa requisitada e chamar as \textit{views}.
 \end{itemize}
 
-Existem diversos \textit{frameworks} no mercado que seguem essa estrutura e o escolhido para desenvolver o TCC foi o Spring MVC.
+Existem diversos \textit{frameworks} no mercado que seguem essa estrutura e o escolhido foi o Spring MVC.
 
 \subsubsection*{Autenticação e Autorização}
 
 Como um dos requisitos do sistema é que uma pessoa possa criar uma lousa virtual e todos os integrantes do seu time possam participar da reunião através da mesma lousa, uma das necessidades do sistema é que o usuário se identifique através de um usuário (autenticação) e quando ele tentar acessar alguma tela o sistema verifique se ele possui permissão (autorização).
 
 Já existem diversas bibliotecas no mercado que abstraem as lógicas de autenticação e autorização, sendo necessário apenas informar qual o modelo de usuário usado pelo sistema. O \textit{framework} escolhido foi o Spring Security devido à facilidade de integração com o Spring MVC.
-%REVISAR A SUBSECAO
+
 \subsubsection*{Banco de dados}
 
-%LUCAS: Essa linha vai sumir ne?
+
 Desde o início do projeto houve a necessidade de algum banco para guardar os seus dados, como, por exemplo, os usuários, lousas virtuais, entre outros. A base de dados usada é o MySQL.
 
-%LUCAS (Sugestão para a primeira frase): Como o sistema trabalha com diversas informações, como os usuários e as lousas virtuais, ele precisa se integrar com algum banco para armazenar seus dados. 
 O sistema ainda precisava se integrar com o banco para conseguir armazenar seus dados. Como o sistema  está escrito na linguagem Java, cujo paradigma é a Orientação a Objetos, enquanto os bancos de dados SQL seguem o paradigma Relacional, existe uma barreira de comunicação entre eles.
 
 Já existem diversos \textit{frameworks} no mercado que abstraem essa comunicação entre as aplicações orientadas a objetos e bancos relacionais, conhecidos como ORM (\textit{Object-relational Mapping}). O mais utilizado é o Hibernate e foi a escolha para o projeto.
-%REVISAR A SUBSECAO
+
 \subsubsection*{Servidor de aplicação e WebSockets}
 
 Por se tratar de uma aplicação web, é essencial escolher em qual servidor rodará o sistema pois um dos requisitos do mesmo é possuir lousas que possam ser acessadas por vários usuários e as alterações devem ser em tempo real. Uma das formas conhecidas para fazer essa funcionalidade é usar o conceito de WebSockets -- um protocolo de redes que estabelece como criar um canal de comunicação entre o navegador e o servidor.
@@ -133,7 +126,6 @@ A classe criada no sistema responsável por criar e utilizar o WebSocket do lado
 
 Bastaria que esta classe armazenasse as informações recebidas através do \textit{socket} no banco de dados. Todos os códigos usados para comunicação com o banco foram isolados em classes que seguem o padrão de projeto DAO~\footnote{http://www.oracle.com/technetwork/java/dataaccessobject-138824.html}. Por trabalhar com o Spring MVC, as classes DAO são anotadas com o @Repository. Com esta anotação, quem passa a gerenciar a classe -- cria objetos a partir dela e distribui esses objetos para outras classes que precisam usá-la -- é o Spring MVC. Esta forma de trabalhar do \textit{framework} segue dois padrões de projeto, o Inversion of Control Containers e a Dependency Injection~\footnote{http://www.martinfowler.com/articles/injection.html}.
 
-%REVISAR OS PROXIMOS DOIS PARAGRAFOS
 Então o cenário do sistema é que havia a classe RetrospectivaEndpoint, gerenciada pelo servidor de aplicação WildFly. Esta classe precisava receber objetos DAO's para enviar as informações para o banco de dados, mas estes são gerenciados pelo Spring MVC. O problema é que as duas tecnologias não são capazes de enviar objetos que uma delas está gerenciando para a outra.
 
 Mesmo pesquisando em blogs e fóruns se existiam outras pessoas que já passaram por esse problema de integração e como elas resolveram, nenhuma informação foi encontrada. Depois de algum tempo estudando mais a fundo as tecnologias e com a ajuda de pessoas da Caelum surgiu uma solução. O Spring MVC possui uma classe chamada de ApplicationContext, que possui objetos de todas as classes que ele gerencia, como os DAO's. Bastava criar a classe auxiliar ApplicationContextHolder, gerenciado pelo Spring e que possui um atributo estático que guarda um objeto de ApplicationContext. Por ser estático, qualquer outra classe do projeto pode acessá-lo, independente de qual tecnologia a gerencia. Assim, a classe RetrospectivaEndpoint consegue receber uma instância de ApplicationContext e, consequentemente, ao DAO.
