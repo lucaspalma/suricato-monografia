@@ -29,7 +29,7 @@ Os desafios mais citados pelos times que fazem a retrospectiva foram a falta de 
 
 Para investigar os pontos levantados nesses artigos, foi adicionada uma pergunta a ser respondida apenas por times que fazem retrospectivas sobre a alternância de atividades nessa reunião e, em caso positivo, quais são as atividades mais utilizadas. As repostas não foram conclusivas, mas geraram a hipótese de que os times variam as atividades mas não o tipo da atividade. Das retrospectivas citadas pelos times que responderam sim, a maior parte delas eram do formato de encontrar problemas e discutir soluções. 
 
-A pesquisa não foi suficiente para contrapor os artigos, foram adicionados requisitos que incentivam os usuários a variar seus tipos de atividades. Para isso, o sistema deveria conter uma listagem com os mais diversos formatos de atividades para o usuário escolher. A apresentação das diversas opções pode ajudar os times a conhecerem novas retrospectivas e alternar entre os diversos tipos. Isso pode resolver os  problemas de falta de engajamento das pessoas e as discussões pouco produtivas.
+A pesquisa não foi suficiente para contrapor os artigos, então foram adicionados requisitos que incentivam os usuários a variar seus tipos de atividades. Para isso, o sistema deveria conter uma listagem com os mais diversos formatos de atividades para o usuário escolher. A apresentação das diversas opções pode ajudar os times a conhecerem novas retrospectivas e alternar entre os diversos tipos. Isso pode resolver os  problemas de falta de engajamento das pessoas e as discussões pouco produtivas.
 
 \subsubsection*{Tempo real}
 
@@ -128,7 +128,7 @@ Bastaria que esta classe armazenasse as informações recebidas através do \tex
 
 Então o cenário do sistema é que havia a classe RetrospectivaEndpoint, gerenciada pelo servidor de aplicação WildFly. Esta classe precisava receber objetos DAO's para enviar as informações para o banco de dados, mas estes são gerenciados pelo Spring MVC. O problema é que as duas tecnologias não são capazes de enviar objetos que uma delas está gerenciando para a outra.
 
-Mesmo pesquisando em blogs e fóruns se existiam outras pessoas que já passaram por esse problema de integração e como elas resolveram, nenhuma informação foi encontrada. Depois de algum tempo estudando mais a fundo as tecnologias e com a ajuda de pessoas da Caelum surgiu uma solução. O Spring MVC possui uma classe chamada de ApplicationContext, que possui objetos de todas as classes que ele gerencia, como os DAO's. Bastava criar a classe auxiliar ApplicationContextHolder, gerenciado pelo Spring e que possui um atributo estático que guarda um objeto de ApplicationContext. Por ser estático, qualquer outra classe do projeto pode acessá-lo, independente de qual tecnologia a gerencia. Assim, a classe RetrospectivaEndpoint consegue receber uma instância de ApplicationContext e, consequentemente, ao DAO.
+Mesmo pesquisando em blogs e fóruns se existiam outras pessoas que já passaram por esse problema de integração e como elas resolveram, nenhuma informação foi encontrada. Depois de algum tempo estudando mais a fundo as tecnologias e com a ajuda de pessoas da Caelum surgiu uma solução. O Spring MVC possui uma classe chamada de ApplicationContext, que possui objetos de todas as classes que ele gerencia, como os DAO's. Bastava criar a classe auxiliar ApplicationContextHolder, gerenciado pelo Spring e que possui um atributo estático que guarda um objeto de ApplicationContext. Por ser estático, qualquer outra classe do projeto pode acessá-lo, independente de qual tecnologia a gerencia. Assim, a classe RetrospectivaEndpoint consegue receber instâncias de ApplicationContext e, consequentemente, do DAO.
 
 Esta solução para o problema de integrar o WebSockets do servidor de aplicação WildFly com o \textit{framework} Spring MVC foi publicado no blog Domine o Spring~\footnote{https://domineospring.wordpress.com/2015/11/03/um-pouco-de-gambi-nao-faz-mal-a-ninguem-spring-em-ambientes-nao-gerenciados/}. 
 
@@ -173,7 +173,7 @@ O Suricato ainda tinha problemas de layout.
   \caption{Tela antiga para criar lousa virtual}\label{figura:criarAntigo}
 \end{figure}
 
-Para liberar o sistema era necessário planejar um layout. O designer Fabio Gushiken foi o responsável por desenhar o logo baseado no suricato. Algumas atividades era necessário fazer o desenho de fundo da lousa virtual, o designer Leonardo Guerra colaborou com as atividades de Speed Car e Hot Air Balloon. Para melhorar a usabilidade do sistema o designer Marco Bruno planejou o fluxo que um usuário do sistema poderia seguir e remodelou as telas pensando nesse fluxo.
+Antes de liberar o sistema era necessário planejar um layout. O designer Fabio Gushiken foi o responsável por desenhar o logo baseado no suricato. Para algumas atividades era necessário fazer o desenho de fundo da lousa virtual e o designer Leonardo Guerra colaborou com as atividades de Speed Car e Hot Air Balloon. Para melhorar a usabilidade do sistema o designer Marco Bruno planejou o fluxo que um usuário do sistema poderia seguir e remodelou as telas pensando nesse fluxo.
 
 \begin{figure}[H]
   \centering
@@ -221,6 +221,6 @@ Para arrumar o layout o foco foi desenvolver as páginas seguindo o que foi plan
 
 Para possibilitar o acesso, o sistema, foi colocado no serviço da Openshift~\footnote{https://www.openshift.com/}. Essa plataforma permite que qualquer pessoa hospede de graça sua aplicação web e possui máquinas preparadas para usar o WildFly. Por ser gratuito, o Openshift desliga a máquina quando ninguém está usando o sistema e liga quando um usuário tenta acessá-la. No entanto, para o Suricato as máquinas se mostraram muito instáveis, já que depois de ligá-la o sistema não era colocado no ar automaticamente. 
 
-A outra possibilidade foi hospedar no serviço da Amazon, o Amazon Web Service~\footnote{https://aws.amazon.com/}. O serviço exige um custo extras e um domínio para servir de servidor DNS da aplicação. Porém é mais confiável e estável.
+A outra possibilidade foi hospedar no serviço da Amazon, o Amazon Web Service~\footnote{https://aws.amazon.com/}. O serviço exige um custo extra e um domínio para servir de servidor DNS da aplicação. Porém é mais confiável e estável.
 
 Atualmente o domínio usado para acessar o projeto é http://suricatoagil.com/login.
