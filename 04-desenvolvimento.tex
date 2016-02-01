@@ -19,7 +19,7 @@ Os requisitos da aplicação foram baseados na forma como a retrospectiva é fei
 
 Em geral, a forma como as retrospectivas são feitas por times locais é utilizando um quadro branco, post-its e canetas. No começo da reunião o facilitador apresenta no quadro algum formato de retrospectiva, também conhecido como atividade. Depois de explicar a atividade para as pessoas, cada integrante pode colocar na lousa post-its, dando suas opiniões, apontando problemas no time, entre outros. A partir dos post-its o time consegue discutir e gerar ideias sobre como melhorar. Cada uma das ideias são escritas na lousa ou em post-its. Por fim, o time escolhe as melhores e define ações que o serão adotadas pela equipe para implementá-la. Essas ações também podem ser escritas na lousa ou em post-its.
 
-O primeiro requisito era que o usuário pudesse criar uma lousa virtual. Escolhendo um formato de retrospectiva e o sistema gera uma tela como um quadro branco com a atividade escolhida desenhada no fundo.
+O primeiro requisito era que o usuário pudesse criar uma lousa virtual. Ele escolhe um formato de retrospectiva e o sistema gera uma tela como um quadro branco com a atividade escolhida desenhada no fundo.
 
 A lousa virtual deve permitir todas as facilidades que a lousa real. Nesse sentido, as funcionalidades de adicionar post-its e escrever comentários na tela foram implementados. Para gerar uma maior usabilidade da aplicação, foram adicionados post-its de diferentes cores, remoção e edição dos post-its e comentários da tela.
 
@@ -33,7 +33,7 @@ A pesquisa não foi suficiente para contrapor os artigos, então foram adicionad
 
 \subsubsection*{Tempo real}
 
-Como os times são formados por um conjunto de pessoas e como elas podem estar espalhadas por diversas regiões, um dos principais requisitos definidos é que todos os integrantes devem mexer na mesma lousa virtual. As lousas foram planejadas  para funcionarem em tempo real para muitos usuários, ou seja, todos os usuários estão visualizando a mesma lousa e tudo que for alterado por alguma pessoa será mostrado no navegador dos outros integrantes.
+Como os times são formados por um conjunto de pessoas e elas podem estar espalhadas por diversas regiões, um dos principais requisitos definidos é que todos os integrantes devem mexer na mesma lousa virtual. As lousas foram planejadas  para funcionarem em tempo real para muitos usuários, ou seja, todos os usuários estão visualizando a mesma lousa e tudo que for alterado por alguma pessoa será mostrado no navegador dos outros integrantes.
 
 \subsubsection*{\textit{Dot voting} (votação nas opções preferidas)}
 
@@ -122,15 +122,15 @@ Devido uma antiga tradição no IME de que os projetos do instituto recebem o no
 
 Com os \textit{frameworks} configurados, faltava habilitar o WebSocket implementado pelo WildFly para funcionar com o Spring MVC.
 
-A classe criada no sistema responsável por criar e utilizar o WebSocket do lado do servidor é a RetrospectivaEndpoint. Para marcá-la como uma classe do WebSocket basta anotar a classe com um @ServerEndpoint e passar qual a url pela qual o canal de comunicação será criado.
+A classe do sistema responsável por criar e utilizar o WebSocket do lado do servidor é a RetrospectivaEndpoint. Para marcá-la como uma classe do WebSocket basta anotá-la com um @ServerEndpoint e passar qual a url pela qual o canal de comunicação será criado.
 
-Bastaria que esta classe armazenasse as informações recebidas através do \textit{socket} no banco de dados. Todos os códigos usados para comunicação com o banco foram isolados em classes que seguem o padrão de projeto DAO~\footnote{http://www.oracle.com/technetwork/java/dataaccessobject-138824.html}. Por trabalhar com o Spring MVC, as classes DAO são anotadas com o @Repository. Com esta anotação, quem passa a gerenciar a classe -- cria objetos a partir dela e distribui esses objetos para outras classes que precisam usá-la -- é o Spring MVC. Esta forma de trabalhar do \textit{framework} segue dois padrões de projeto, o Inversion of Control Containers e a Dependency Injection~\footnote{http://www.martinfowler.com/articles/injection.html}.
+Bastaria que esta classe armazenasse as informações recebidas através do \textit{socket} no banco de dados. Todos os códigos usados para comunicação com o banco foram isolados em classes que seguem o padrão de projeto DAO~\footnote{http://www.oracle.com/technetwork/java/dataaccessobject-138824.html}. Por trabalhar com o Spring MVC, as classes DAO são anotadas com o @Repository. Com esta anotação, quem passa a gerenciar a classe -- cria objetos a partir dela e distribui esses objetos para outras classes que precisam usá-la -- é o Spring MVC. Esta forma de trabalhar do \textit{framework} segue dois padrões de projeto, o \textit{Inversion of Control Containers} e a \textit{Dependency Injection}~\footnote{http://www.martinfowler.com/articles/injection.html}.
 
 Então o cenário do sistema é que havia a classe RetrospectivaEndpoint, gerenciada pelo servidor de aplicação WildFly. Esta classe precisava receber objetos DAO's para enviar as informações para o banco de dados, mas estes são gerenciados pelo Spring MVC. O problema é que as duas tecnologias não são capazes de enviar objetos que uma delas está gerenciando para a outra.
 
 Mesmo pesquisando em blogs e fóruns se existiam outras pessoas que já passaram por esse problema de integração e como elas resolveram, nenhuma informação foi encontrada. Depois de algum tempo estudando mais a fundo as tecnologias e com a ajuda de pessoas da Caelum surgiu uma solução. O Spring MVC possui uma classe chamada de ApplicationContext, que possui objetos de todas as classes que ele gerencia, como os DAO's. Bastava criar a classe auxiliar ApplicationContextHolder, gerenciado pelo Spring e que possui um atributo estático que guarda um objeto de ApplicationContext. Por ser estático, qualquer outra classe do projeto pode acessá-lo, independente de qual tecnologia a gerencia. Assim, a classe RetrospectivaEndpoint consegue receber instâncias de ApplicationContext e, consequentemente, do DAO.
 
-Esta solução para o problema de integrar o WebSockets do servidor de aplicação WildFly com o \textit{framework} Spring MVC foi publicado no blog Domine o Spring~\footnote{https://domineospring.wordpress.com/2015/11/03/um-pouco-de-gambi-nao-faz-mal-a-ninguem-spring-em-ambientes-nao-gerenciados/}. 
+Esta solução para o problema de integrar o WebSockets do servidor de aplicação WildFly com o \textit{framework} Spring MVC foi publicado no blog Domine o Spring~\footnote{https://domineospring.wordpress.com/2015/11/03/um-pouco-de-gambi-nao-faz-mal-a-ninguem-spring-\\em-ambientes-nao-gerenciados/}. 
 
 \subsection{Testes do software}
 
@@ -219,7 +219,7 @@ Para arrumar o layout o foco foi desenvolver as páginas seguindo o que foi plan
 
 \subsection{Hospedagem}
 
-Para possibilitar o acesso, o sistema, foi colocado no serviço da Openshift~\footnote{https://www.openshift.com/}. Essa plataforma permite que qualquer pessoa hospede de graça sua aplicação web e possui máquinas preparadas para usar o WildFly. Por ser gratuito, o Openshift desliga a máquina quando ninguém está usando o sistema e liga quando um usuário tenta acessá-la. No entanto, para o Suricato as máquinas se mostraram muito instáveis, já que depois de ligá-la o sistema não era colocado no ar automaticamente. 
+Para possibilitar o acesso, o sistema foi colocado no serviço da Openshift~\footnote{https://www.openshift.com/}. Essa plataforma permite que qualquer pessoa hospede de graça sua aplicação web e possui máquinas preparadas para usar o WildFly. Por ser gratuito, o Openshift desliga a máquina quando ninguém está usando o sistema e liga quando um usuário tenta acessá-la. No entanto, para o Suricato as máquinas se mostraram muito instáveis, já que depois de ligá-la o sistema não era colocado no ar automaticamente. 
 
 A outra possibilidade foi hospedar no serviço da Amazon, o Amazon Web Service~\footnote{https://aws.amazon.com/}. O serviço exige um custo extra e um domínio para servir de servidor DNS da aplicação. Porém é mais confiável e estável.
 
